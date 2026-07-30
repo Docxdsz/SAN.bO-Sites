@@ -46,7 +46,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const el = document.getElementById('privacy-contact-email');
-      if (el && window.SITE_CONFIG && SITE_CONFIG.NOTIFY_EMAIL) {
+      if (el && window.SITE_CONFIG && SITE_CONFIG.NOTIFY_EMAIL && !SITE_CONFIG.NOTIFY_EMAIL.startsWith('TODO')) {
         el.textContent = SITE_CONFIG.NOTIFY_EMAIL;
       }
     });
