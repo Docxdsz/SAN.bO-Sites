@@ -4,7 +4,7 @@
 
 **Goal:** Build the single-page "Fase Pirata" teaser site for Reserva Vereda Granja Viana — a lead-capture landing page matching the brand book's dark-green/gold identity, per `docs/superpowers/specs/2026-07-30-reserva-vereda-teaser-design.md`.
 
-**Architecture:** Static HTML + Tailwind CDN + GSAP + Lenis, zero build step. One `index.html`, one `privacy.html`, a small `css/style.css`, and `js/config.js` + `js/main.js`. Images are extracted once from the brand-book PDF via a small Node/sharp script and committed as final assets.
+**Architecture:** Static HTML + Tailwind CDN + GSAP + Lenis, zero build step. One `index.html`, one `privacy.html`, a small `css/style.css`, and `js/tailwind-config.js` + `js/config.js` + `js/main.js`. Images are extracted once from the brand-book PDF via a small Node/sharp script and committed as final assets.
 
 **Tech Stack:** HTML5, Tailwind CSS (browser CDN build), GSAP 3 + ScrollTrigger (CDN), Lenis (CDN), vanilla JS (no modules — plain scripts for `file://`/no-build compatibility), Node.js + sharp (dev-time only, for the asset pipeline), Poppler (`pdftoppm`) (dev-time only, for rendering PDF pages).
 
@@ -230,12 +230,13 @@ git commit -m "Add asset extraction pipeline and generated site images"
 **Files:**
 - Create: `site/index.html`
 - Create: `site/css/style.css`
+- Create: `site/js/tailwind-config.js`
 - Create: `site/js/config.js` (empty stub — filled in Task 6)
 - Create: `site/js/main.js` (empty stub — filled in Task 5)
 
 **Interfaces:**
 - Consumes (from Task 1): `assets/images/hero-facade.jpg`, `assets/logo.png`.
-- Produces (consumed by Tasks 3, 4, 5, 6): DOM IDs `#hero-bg`, `#hero-headline`, `#hero-subtitle`, `#hero-cta`; the Tailwind `tailwind.config` color/font tokens (`forest-950/900/800`, `gold-400/600`, `offwhite`, `font-serif`, `font-sans`); the `<body>` element with classes `bg-forest-950 text-offwhite font-sans antialiased`.
+- Produces (consumed by Tasks 3, 4, 5, 6): DOM IDs `#hero-bg`, `#hero-headline`, `#hero-subtitle`, `#hero-cta`; `site/js/tailwind-config.js` (shared Tailwind color/font token config, also consumed by `privacy.html` in Task 4 — do not duplicate this config inline in any other file); the `<body>` element with classes `bg-forest-950 text-offwhite font-sans antialiased`.
 
 - [ ] **Step 1: Create empty JS stubs so script tags never 404**
 
@@ -249,7 +250,32 @@ git commit -m "Add asset extraction pipeline and generated site images"
 // Filled in by Task 5 (hero animation) and Task 6 (scroll reveals + form).
 ```
 
-- [ ] **Step 2: Create `site/css/style.css`**
+- [ ] **Step 2: Create `site/js/tailwind-config.js`**
+
+Shared between `index.html` and `privacy.html` (Task 4) so the color/font tokens are defined once.
+
+```js
+// js/tailwind-config.js
+// Loaded after the Tailwind CDN <script> tag, before any page content.
+// Shared by index.html and privacy.html — do not duplicate this config inline.
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        forest: { 950: '#0B1712', 900: '#11221B', 800: '#172E23' },
+        gold: { 400: '#CBA97A', 600: '#A9824F' },
+        offwhite: '#F4F1E8',
+      },
+      fontFamily: {
+        serif: ['"Playfair Display"', 'serif'],
+        sans: ['Montserrat', 'sans-serif'],
+      },
+    },
+  },
+};
+```
+
+- [ ] **Step 3: Create `site/css/style.css`**
 
 ```css
 /* css/style.css */
@@ -271,7 +297,7 @@ body {
 }
 ```
 
-- [ ] **Step 3: Create `site/index.html`**
+- [ ] **Step 4: Create `site/index.html`**
 
 ```html
 <!DOCTYPE html>
@@ -287,23 +313,7 @@ body {
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            forest: { 950: '#0B1712', 900: '#11221B', 800: '#172E23' },
-            gold: { 400: '#CBA97A', 600: '#A9824F' },
-            offwhite: '#F4F1E8',
-          },
-          fontFamily: {
-            serif: ['"Playfair Display"', 'serif'],
-            sans: ['Montserrat', 'sans-serif'],
-          },
-        },
-      },
-    };
-  </script>
+  <script src="js/tailwind-config.js"></script>
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -342,7 +352,7 @@ body {
 
 Note the CTA and subtitle have **no** `opacity-0` classes — they must be visible by default so the page works even if the GSAP CDN fails to load; Task 5 hides/animates them via JS at runtime instead.
 
-- [ ] **Step 4: Verify with Playwright**
+- [ ] **Step 5: Verify with Playwright**
 
 Ensure the local server is running (see "Local server for verification" above), then:
 - Navigate to `http://localhost:5500/index.html`.
@@ -350,11 +360,11 @@ Ensure the local server is running (see "Local server for verification" above), 
 - Take a screenshot at 1440x900 and at 390x844 (mobile); confirm the hero fills the viewport and text is legible against the background image on both.
 - Check console messages; expect zero errors (the GSAP/Lenis scripts loading unused is fine, no errors).
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
 cd "C:\Users\Doc\Desktop\ReservaVereda\reserva-vereda-site"
-git add site/index.html site/css/style.css site/js/config.js site/js/main.js
+git add site/index.html site/css/style.css site/js/tailwind-config.js site/js/config.js site/js/main.js
 git commit -m "Add HTML shell, Tailwind/font setup, and hero section"
 ```
 
@@ -429,7 +439,7 @@ git commit -m "Add A Promessa section and footer"
 - Create: `site/privacy.html`
 
 **Interfaces:**
-- Consumes (from Task 2): color/font tokens, `js/config.js` script tag pattern.
+- Consumes (from Task 2): color/font tokens, `js/tailwind-config.js` (load via `<script src="js/tailwind-config.js"></script>` after the Tailwind CDN tag in `privacy.html` too — do not inline a second copy of the config), `js/config.js` script tag pattern.
 - Produces (consumed by Task 6): DOM IDs `#lead-form`, `#field-nome`, `#field-email`, `#field-telefone`, `#form-success`, `#form-error`; `#privacy-contact-email` in `privacy.html`.
 
 - [ ] **Step 1: Insert the form section into `site/index.html`**
@@ -486,20 +496,7 @@ Note `novalidate` on the form: native browser validation popups are disabled bec
   <title>Política de Privacidade | Reserva Vereda</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            forest: { 950: '#0B1712' },
-            gold: { 400: '#CBA97A' },
-            offwhite: '#F4F1E8',
-          },
-          fontFamily: { sans: ['Montserrat', 'sans-serif'] },
-        },
-      },
-    };
-  </script>
+  <script src="js/tailwind-config.js"></script>
 </head>
 <body class="bg-forest-950 text-offwhite font-sans antialiased">
   <main class="max-w-2xl mx-auto px-6 py-16">
