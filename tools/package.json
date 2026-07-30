@@ -1,0 +1,9 @@
+{
+  "name": "reserva-vereda-asset-tools",
+  "private": true,
+  "version": "1.0.0",
+  "description": "One-time asset extraction pipeline for the Reserva Vereda teaser site. Not part of the deployed site.",
+  "dependencies": {
+    "sharp": "^0.35.3"
+  }
+}
