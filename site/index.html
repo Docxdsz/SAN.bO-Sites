@@ -63,7 +63,40 @@
     </p>
   </footer>
 
-  <!-- Task 4 adds #form here -->
+  <section id="form" class="relative py-24 md:py-32 px-6 bg-forest-900">
+    <div class="max-w-xl mx-auto text-center js-reveal">
+      <h2 class="font-serif text-2xl md:text-4xl text-offwhite mb-4">Seja um dos primeiros a descobrir.</h2>
+      <p class="text-offwhite/70 mb-10">
+        Garanta acesso exclusivo às informações de pré-lançamento do Reserva Vereda. Nossa equipe entrará em contato para apresentar este projeto único.
+      </p>
+
+      <form id="lead-form" class="space-y-5 text-left" novalidate>
+        <div>
+          <label for="field-nome" class="block text-xs uppercase tracking-widest text-gold-400 mb-2">Nome</label>
+          <input type="text" id="field-nome" name="nome" required class="w-full bg-transparent border border-offwhite/30 focus:border-gold-400 focus:shadow-[0_0_12px_rgba(203,169,122,0.35)] outline-none px-4 py-3 text-offwhite transition-all" />
+        </div>
+        <div>
+          <label for="field-email" class="block text-xs uppercase tracking-widest text-gold-400 mb-2">E-mail</label>
+          <input type="email" id="field-email" name="email" required class="w-full bg-transparent border border-offwhite/30 focus:border-gold-400 focus:shadow-[0_0_12px_rgba(203,169,122,0.35)] outline-none px-4 py-3 text-offwhite transition-all" />
+        </div>
+        <div>
+          <label for="field-telefone" class="block text-xs uppercase tracking-widest text-gold-400 mb-2">Telefone / WhatsApp</label>
+          <input type="tel" id="field-telefone" name="telefone" required pattern="[0-9()\-\s+]{8,20}" class="w-full bg-transparent border border-offwhite/30 focus:border-gold-400 focus:shadow-[0_0_12px_rgba(203,169,122,0.35)] outline-none px-4 py-3 text-offwhite transition-all" />
+        </div>
+        <button type="submit" class="w-full bg-gold-400 hover:bg-gold-600 hover:shadow-[0_0_20px_rgba(203,169,122,0.5)] text-forest-950 uppercase tracking-widest text-sm py-4 transition-all duration-300">
+          Quero receber informações exclusivas
+        </button>
+        <p id="form-error" class="hidden text-red-400 text-sm text-center pt-2">
+          Não foi possível enviar. Verifique os campos e tente novamente.
+        </p>
+      </form>
+
+      <div id="form-success" class="hidden">
+        <p class="font-serif text-2xl text-gold-400 mb-3">Obrigado!</p>
+        <p class="text-offwhite/80">Recebemos seu interesse. Nossa equipe entrará em contato em breve.</p>
+      </div>
+    </div>
+  </section>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
