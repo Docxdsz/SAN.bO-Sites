@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initHeroAnimation();
   initScrollReveals();
+  initDividers();
+  initParallax();
+  initStickyChrome();
   initLeadForm();
 });
 
@@ -42,7 +45,7 @@ function initHeroAnimation() {
   gsap.set([subtitle, cta], { opacity: 0, y: 16 });
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.fromTo('#hero-bg', { scale: 1.15 }, { scale: 1, duration: 2.4 })
+  tl.fromTo('#hero-bg', { scale: 1.25 }, { scale: 1.08, duration: 2.4 })
     .to(words, { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.08 }, 0.3)
     .to(subtitle, { opacity: 1, y: 0, duration: 0.8 }, '-=0.3')
     .to(cta, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
@@ -64,16 +67,85 @@ function initScrollReveals() {
   });
 }
 
+function initDividers() {
+  if (typeof gsap === 'undefined') return;
+
+  const items = document.querySelectorAll('.js-divider');
+  gsap.set(items, { scaleX: 0 });
+  items.forEach((el) => {
+    gsap.to(el, {
+      scaleX: 1,
+      duration: 0.8,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%' },
+    });
+  });
+}
+
+function initParallax() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  document.querySelectorAll('.js-parallax').forEach((img) => {
+    const section = img.closest('section');
+    if (!section) return;
+    gsap.to(img, {
+      yPercent: 6,
+      ease: 'none',
+      scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true },
+    });
+  });
+}
+
+function initStickyChrome() {
+  const header = document.getElementById('site-header');
+  const whatsapp = document.getElementById('whatsapp-float');
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+
+  const show = () => {
+    if (header) {
+      header.classList.remove('-translate-y-full');
+      header.classList.add('translate-y-0');
+    }
+    if (whatsapp) {
+      whatsapp.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+      whatsapp.classList.add('opacity-100', 'translate-y-0');
+    }
+  };
+  const hide = () => {
+    if (header) {
+      header.classList.add('-translate-y-full');
+      header.classList.remove('translate-y-0');
+    }
+    if (whatsapp) {
+      whatsapp.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+      whatsapp.classList.remove('opacity-100', 'translate-y-0');
+    }
+  };
+
+  if (typeof IntersectionObserver === 'undefined') {
+    show();
+    return;
+  }
+
+  const observer = new IntersectionObserver(([entry]) => (entry.isIntersecting ? hide() : show()), { threshold: 0 });
+  observer.observe(hero);
+}
+
 function initLeadForm() {
   const form = document.getElementById('lead-form');
   if (!form) return;
 
   const successEl = document.getElementById('form-success');
   const errorEl = document.getElementById('form-error');
-  const whatsappLink = document.getElementById('contact-whatsapp');
+  const whatsappLinks = [document.getElementById('contact-whatsapp'), document.getElementById('whatsapp-float')].filter(Boolean);
 
-  if (whatsappLink && window.SITE_CONFIG && SITE_CONFIG.WHATSAPP_NUMBER && !SITE_CONFIG.WHATSAPP_NUMBER.startsWith('TODO')) {
-    whatsappLink.href = `https://wa.me/${SITE_CONFIG.WHATSAPP_NUMBER}`;
+  if (window.SITE_CONFIG && SITE_CONFIG.WHATSAPP_NUMBER && !SITE_CONFIG.WHATSAPP_NUMBER.startsWith('TODO')) {
+    whatsappLinks.forEach((el) => {
+      el.href = `https://wa.me/${SITE_CONFIG.WHATSAPP_NUMBER}`;
+      el.target = '_blank';
+      el.rel = 'noopener';
+    });
   }
 
   form.addEventListener('submit', async (event) => {

@@ -17,14 +17,23 @@
 </head>
 <body class="bg-forest-950 text-offwhite font-sans antialiased">
 
+  <header id="site-header" class="fixed top-0 inset-x-0 z-50 -translate-y-full transition-transform duration-500 ease-out bg-forest-950/90 backdrop-blur-sm border-b border-offwhite/10">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+      <img src="assets/logo.svg" alt="Reserva Vereda" class="h-7 md:h-8" />
+      <a href="#form" class="border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-forest-950 transition-all duration-300 px-5 py-2 text-xs uppercase tracking-widest">
+        Peça informações
+      </a>
+    </div>
+  </header>
+
   <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0">
-      <img id="hero-bg" src="assets/images/hero-facade.jpg" alt="" class="w-full h-full object-cover scale-110" />
+      <img id="hero-bg" src="assets/images/hero-facade.jpg" alt="" class="js-parallax w-full h-full object-cover scale-110" />
       <div class="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/70 to-forest-950/40"></div>
     </div>
     <div class="relative z-10 max-w-3xl px-6 text-center">
       <img src="assets/logo.svg" alt="Reserva Vereda Granja Viana" class="mx-auto mb-8 w-48 md:w-56" />
-      <h1 id="hero-headline" class="font-serif text-3xl md:text-5xl lg:text-6xl leading-tight text-offwhite mb-6">
+      <h1 id="hero-headline" class="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight tracking-tight text-offwhite mb-6">
         Em breve, o melhor condomínio da Granja Viana.
       </h1>
       <p id="hero-subtitle" class="font-sans text-base md:text-lg text-offwhite/80 mb-10">
@@ -39,19 +48,23 @@
   <section id="promessa" class="relative py-24 md:py-32 px-6 bg-offwhite">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div class="js-reveal">
+        <div class="js-divider mb-6 h-px w-16 bg-gold-600/50"></div>
         <h2 class="font-serif text-2xl md:text-4xl text-forest-950 mb-6">Onde a natureza encontra a sofisticação.</h2>
         <p class="text-forest-950/70 leading-relaxed">
           Imagine um refúgio onde cada detalhe é pensado para o seu conforto, cercado pela beleza natural e com acesso a tudo o que você precisa.
         </p>
       </div>
       <div class="js-reveal">
-        <img src="assets/images/promise-garden.jpg" alt="" class="w-full h-80 md:h-[28rem] object-cover rounded-sm" />
+        <div class="overflow-hidden rounded-sm ring-1 ring-gold-600/40 ring-offset-4 ring-offset-offwhite">
+          <img src="assets/images/promise-garden.jpg" alt="" class="js-parallax w-full h-80 md:h-[28rem] object-cover scale-110" />
+        </div>
       </div>
     </div>
   </section>
 
   <section id="localizacao" class="relative py-24 md:py-32 px-6 bg-forest-800">
     <div class="max-w-3xl mx-auto text-center js-reveal">
+      <div class="js-divider mx-auto mb-6 h-px w-16 bg-gold-400/60"></div>
       <h2 class="font-serif text-2xl md:text-4xl text-gold-400 mb-6">Viver na Granja Viana é um privilégio.</h2>
       <p class="text-offwhite/80 leading-relaxed">
         Cercada por áreas verdes preservadas e a poucos minutos dos principais acessos viários, a Granja Viana é sinônimo de qualidade de vida, segurança e sofisticação discreta — um dos endereços mais cobiçados de São Paulo.
@@ -59,21 +72,70 @@
     </div>
   </section>
 
-  <section id="amenidades" class="relative py-24 md:py-32 px-6 bg-offwhite">
+  <section id="diferenciais" class="relative py-24 md:py-32 px-6 bg-offwhite">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center js-reveal mb-16">
+        <div class="js-divider mx-auto mb-6 h-px w-16 bg-gold-600/50"></div>
+        <h2 class="font-serif text-2xl md:text-4xl text-forest-950">O que faz do Reserva Vereda um lugar único.</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-x-12 gap-y-10 js-reveal">
+        <div class="flex gap-5">
+          <span class="font-serif text-3xl md:text-4xl text-gold-600">01</span>
+          <div>
+            <h3 class="text-forest-950 font-medium tracking-wide uppercase text-sm mb-2">Natureza preservada</h3>
+            <p class="text-forest-950/70 text-sm leading-relaxed">Cercado por áreas verdes que raramente se encontram tão perto da cidade.</p>
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <span class="font-serif text-3xl md:text-4xl text-gold-600">02</span>
+          <div>
+            <h3 class="text-forest-950 font-medium tracking-wide uppercase text-sm mb-2">Localização privilegiada</h3>
+            <p class="text-forest-950/70 text-sm leading-relaxed">A poucos minutos dos principais acessos viários da Granja Viana.</p>
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <span class="font-serif text-3xl md:text-4xl text-gold-600">03</span>
+          <div>
+            <h3 class="text-forest-950 font-medium tracking-wide uppercase text-sm mb-2">Segurança 24 horas</h3>
+            <p class="text-forest-950/70 text-sm leading-relaxed">Tranquilidade para você e sua família, todos os dias.</p>
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <span class="font-serif text-3xl md:text-4xl text-gold-600">04</span>
+          <div>
+            <h3 class="text-forest-950 font-medium tracking-wide uppercase text-sm mb-2">Lazer completo</h3>
+            <p class="text-forest-950/70 text-sm leading-relaxed">Espaços pensados para cada momento do seu dia a dia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="amenidades" class="relative py-24 md:py-32 px-6 bg-forest-900">
     <div class="max-w-3xl mx-auto text-center js-reveal">
-      <h2 class="font-serif text-2xl md:text-4xl text-forest-950 mb-10">Feito para uma vida extraordinária.</h2>
-      <p class="flex flex-wrap justify-center items-center gap-x-2 gap-y-3 text-sm md:text-base uppercase tracking-widest text-gold-600">
+      <div class="js-divider mx-auto mb-6 h-px w-16 bg-gold-400/60"></div>
+      <h2 class="font-serif text-2xl md:text-4xl text-offwhite mb-10">Feito para uma vida extraordinária.</h2>
+      <p class="flex flex-wrap justify-center items-center gap-x-2 gap-y-3 text-sm md:text-base uppercase tracking-widest text-gold-400">
         <span>Piscina Resort</span>
-        <span class="text-forest-950/25">&middot;</span>
+        <span class="text-offwhite/25">&middot;</span>
         <span>Fitness &amp; Pilates</span>
-        <span class="text-forest-950/25">&middot;</span>
+        <span class="text-offwhite/25">&middot;</span>
         <span>Praça Gourmet</span>
-        <span class="text-forest-950/25">&middot;</span>
+        <span class="text-offwhite/25">&middot;</span>
         <span>Pet Place</span>
-        <span class="text-forest-950/25">&middot;</span>
+        <span class="text-offwhite/25">&middot;</span>
         <span>Salão de Festas</span>
-        <span class="text-forest-950/25">&middot;</span>
+        <span class="text-offwhite/25">&middot;</span>
         <span>Segurança 24h</span>
+      </p>
+    </div>
+  </section>
+
+  <section id="quote" class="relative py-24 md:py-36 px-6 bg-offwhite">
+    <div class="max-w-3xl mx-auto text-center js-reveal">
+      <div class="js-divider mx-auto mb-8 h-px w-16 bg-gold-600/50"></div>
+      <p class="font-serif italic text-2xl md:text-4xl text-forest-950 leading-snug">
+        &ldquo;Sofisticação que não precisa se anunciar. Apenas se vive.&rdquo;
       </p>
     </div>
   </section>
@@ -81,17 +143,18 @@
   <section id="galeria" class="relative py-24 md:py-32 px-6 bg-forest-950">
     <div class="max-w-6xl mx-auto">
       <div class="text-center js-reveal mb-14">
+        <div class="js-divider mx-auto mb-6 h-px w-16 bg-gold-400/60"></div>
         <h2 class="font-serif text-2xl md:text-4xl text-offwhite mb-4">Ambientes que você vai viver.</h2>
         <p class="text-offwhite/70 max-w-xl mx-auto">Um vislumbre dos espaços pensados para o seu dia a dia.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 js-reveal">
-        <div class="overflow-hidden rounded-sm">
+        <div class="overflow-hidden rounded-sm ring-1 ring-gold-400/30 ring-offset-4 ring-offset-forest-950">
           <img src="assets/images/gallery-piscina.jpg" alt="Piscina com deck e área de lazer do Reserva Vereda" class="w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
         </div>
-        <div class="overflow-hidden rounded-sm">
+        <div class="overflow-hidden rounded-sm ring-1 ring-gold-400/30 ring-offset-4 ring-offset-forest-950">
           <img src="assets/images/gallery-deck.jpg" alt="Deck de piscina com vista para o jardim do Reserva Vereda" class="w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
         </div>
-        <div class="overflow-hidden rounded-sm">
+        <div class="overflow-hidden rounded-sm ring-1 ring-gold-400/30 ring-offset-4 ring-offset-forest-950">
           <img src="assets/images/gallery-mirante.jpg" alt="Fachada e terraços do Reserva Vereda ao entardecer" class="w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
         </div>
       </div>
@@ -100,6 +163,7 @@
 
   <section id="form" class="relative py-24 md:py-32 px-6 bg-forest-900">
     <div class="max-w-xl mx-auto text-center js-reveal">
+      <div class="js-divider mx-auto mb-6 h-px w-16 bg-gold-400/60"></div>
       <p class="text-gold-400 text-xs md:text-sm uppercase tracking-[0.2em] mb-4">Acesso Antecipado &middot; Vagas Limitadas</p>
       <h2 class="font-serif text-2xl md:text-4xl text-offwhite mb-4">Seja um dos primeiros a descobrir.</h2>
       <p class="text-offwhite/70 mb-10">
@@ -150,6 +214,12 @@
       © 2026 Reserva Vereda Granja Viana. Todos os direitos reservados.
     </p>
   </footer>
+
+  <a id="whatsapp-float" href="#form" aria-label="Contato via WhatsApp" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-forest-950 border border-gold-400/50 shadow-lg flex items-center justify-center opacity-0 translate-y-4 pointer-events-none transition-all duration-500 hover:border-gold-400 hover:shadow-[0_0_20px_rgba(203,169,122,0.35)]">
+    <svg viewBox="0 0 32 32" class="w-6 h-6 fill-gold-400" aria-hidden="true">
+      <path d="M16 3C9.373 3 4 8.373 4 15c0 2.386.703 4.612 1.917 6.481L4 29l7.72-1.877A11.93 11.93 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16 3Zm0 21.818a9.77 9.77 0 0 1-4.98-1.363l-.357-.212-4.58 1.113 1.142-4.462-.233-.367A9.77 9.77 0 0 1 5.727 15C5.727 9.61 10.61 5.727 16 5.727S26.273 9.61 26.273 15 21.39 24.818 16 24.818Zm5.14-7.34c-.28-.14-1.66-.82-1.918-.914-.257-.093-.444-.14-.63.14-.187.28-.723.914-.887 1.1-.163.187-.327.21-.607.07-.28-.14-1.183-.436-2.253-1.39-.833-.742-1.396-1.66-1.56-1.94-.163-.28-.017-.43.123-.57.126-.126.28-.327.42-.49.14-.164.187-.28.28-.467.093-.187.047-.35-.023-.49-.07-.14-.63-1.52-.863-2.08-.227-.546-.457-.472-.63-.48h-.537c-.187 0-.49.07-.747.35-.257.28-.98.958-.98 2.337 0 1.38 1.004 2.712 1.144 2.9.14.187 1.977 3.02 4.79 4.235.669.289 1.19.462 1.596.591.67.213 1.28.183 1.763.111.538-.08 1.66-.678 1.894-1.333.234-.654.234-1.215.164-1.333-.07-.117-.257-.187-.537-.327Z"/>
+    </svg>
+  </a>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
