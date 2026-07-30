@@ -1,0 +1,17 @@
+/* css/style.css */
+html {
+  scroll-behavior: auto; /* Lenis (added in Task 5) handles smooth scroll */
+}
+
+body {
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #cba97a;
+  color: #0b1712;
+}
+
+.hero-word {
+  will-change: transform, opacity;
+}
