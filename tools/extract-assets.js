@@ -18,12 +18,15 @@ const jobs = [
   {
     src: 'page-40.jpg',
     out: 'images/promise-garden.jpg',
-    crop: (w, h) => ({
-      left: Math.round(w * 0.20),
-      top: 0,
-      width: Math.round(w * 0.80),
-      height: h,
-    }),
+    crop: (w, h) => {
+      const left = Math.round(w * 0.213);
+      return {
+        left,
+        top: 0,
+        width: w - left,
+        height: h,
+      };
+    },
     resizeWidth: 2000,
     jpegQuality: 82,
   },
@@ -50,10 +53,10 @@ const jobs = [
     src: 'page-01.jpg',
     out: 'partners.png',
     crop: (w, h) => ({
-      left: Math.round(w * 0.05),
-      top: Math.round(h * 0.9275),
-      width: Math.round(w * 0.71),
-      height: Math.round(h * 0.0575),
+      left: Math.round(w * 0.292),
+      top: Math.round(h * 0.9212),
+      width: Math.round(w * 0.406),
+      height: Math.round(h * 0.0344),
     }),
     resizeWidth: 1400,
     png: true,
