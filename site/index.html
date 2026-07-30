@@ -17,6 +17,8 @@
 </head>
 <body class="bg-forest-950 text-offwhite font-sans antialiased">
 
+  <div class="grain-overlay" aria-hidden="true"></div>
+
   <header id="site-header" class="fixed top-0 inset-x-0 z-50 -translate-y-full transition-transform duration-500 ease-out bg-forest-950/90 backdrop-blur-sm border-b border-offwhite/10">
     <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
       <img src="assets/logo.svg" alt="Reserva Vereda" class="h-7 md:h-8" />
@@ -62,8 +64,12 @@
     </div>
   </section>
 
-  <section id="localizacao" class="relative py-24 md:py-32 px-6 bg-forest-800">
-    <div class="max-w-3xl mx-auto text-center js-reveal">
+  <section id="localizacao" class="relative py-20 md:py-28 px-6 bg-forest-800 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="assets/images/location-bg.jpg" alt="" class="js-parallax w-full h-full object-cover scale-110" />
+      <div class="absolute inset-0 bg-forest-950/75"></div>
+    </div>
+    <div class="relative max-w-3xl mx-auto text-center js-reveal">
       <div class="js-divider mx-auto mb-6 h-px w-16 bg-gold-400/60"></div>
       <h2 class="font-serif text-2xl md:text-4xl text-gold-400 mb-6">Viver na Granja Viana é um privilégio.</h2>
       <p class="text-offwhite/80 leading-relaxed">
@@ -111,27 +117,40 @@
     </div>
   </section>
 
-  <section id="amenidades" class="relative py-24 md:py-32 px-6 bg-forest-900">
+  <section id="amenidades" class="relative py-20 md:py-28 px-6 bg-forest-900">
     <div class="max-w-3xl mx-auto text-center js-reveal">
       <div class="js-divider mx-auto mb-6 h-px w-16 bg-gold-400/60"></div>
       <h2 class="font-serif text-2xl md:text-4xl text-offwhite mb-10">Feito para uma vida extraordinária.</h2>
-      <p class="flex flex-wrap justify-center items-center gap-x-2 gap-y-3 text-sm md:text-base uppercase tracking-widest text-gold-400">
-        <span>Piscina Resort</span>
-        <span class="text-offwhite/25">&middot;</span>
-        <span>Fitness &amp; Pilates</span>
-        <span class="text-offwhite/25">&middot;</span>
-        <span>Praça Gourmet</span>
-        <span class="text-offwhite/25">&middot;</span>
-        <span>Pet Place</span>
-        <span class="text-offwhite/25">&middot;</span>
-        <span>Salão de Festas</span>
-        <span class="text-offwhite/25">&middot;</span>
-        <span>Segurança 24h</span>
-      </p>
+      <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 text-sm md:text-base uppercase tracking-widest text-gold-400">
+        <span class="inline-flex items-center gap-2">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 17c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/></svg>
+          Piscina Resort
+        </span>
+        <span class="inline-flex items-center gap-2">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="9" width="3" height="6" rx="1"/><rect x="19" y="9" width="3" height="6" rx="1"/><path d="M7 12h10" stroke-linecap="round"/><path d="M5 10v4M19 10v4" stroke-linecap="round"/></svg>
+          Fitness &amp; Pilates
+        </span>
+        <span class="inline-flex items-center gap-2">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 2v6a2 2 0 1 0 4 0V2M9 2v20M16 2c-1.2 0-2 2.2-2 5s.8 5 2 5v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Praça Gourmet
+        </span>
+        <span class="inline-flex items-center gap-2">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="15.5" r="3.2"/><circle cx="5.5" cy="9" r="1.9"/><circle cx="18.5" cy="9" r="1.9"/><circle cx="9" cy="5" r="1.7"/><circle cx="15" cy="5" r="1.7"/></svg>
+          Pet Place
+        </span>
+        <span class="inline-flex items-center gap-2">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.7 6.3L20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7L12 2Z"/></svg>
+          Salão de Festas
+        </span>
+        <span class="inline-flex items-center gap-2">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3Z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Segurança 24h
+        </span>
+      </div>
     </div>
   </section>
 
-  <section id="quote" class="relative py-24 md:py-36 px-6 bg-offwhite">
+  <section id="quote" class="relative py-20 md:py-28 px-6 bg-offwhite">
     <div class="max-w-3xl mx-auto text-center js-reveal">
       <div class="js-divider mx-auto mb-8 h-px w-16 bg-gold-600/50"></div>
       <p class="font-serif italic text-2xl md:text-4xl text-forest-950 leading-snug">
