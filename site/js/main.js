@@ -102,6 +102,7 @@ function initParallax() {
 function initStickyChrome() {
   const header = document.getElementById('site-header');
   const whatsapp = document.getElementById('whatsapp-float');
+  const ellevenSeal = document.getElementById('elleven-seal');
   const hero = document.getElementById('hero');
   if (!hero) return;
 
@@ -114,6 +115,10 @@ function initStickyChrome() {
       whatsapp.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
       whatsapp.classList.add('opacity-100', 'translate-y-0');
     }
+    if (ellevenSeal) {
+      ellevenSeal.classList.remove('opacity-0', 'translate-y-4');
+      ellevenSeal.classList.add('opacity-100', 'translate-y-0');
+    }
   };
   const hide = () => {
     if (header) {
@@ -123,6 +128,10 @@ function initStickyChrome() {
     if (whatsapp) {
       whatsapp.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
       whatsapp.classList.remove('opacity-100', 'translate-y-0');
+    }
+    if (ellevenSeal) {
+      ellevenSeal.classList.add('opacity-0', 'translate-y-4');
+      ellevenSeal.classList.remove('opacity-100', 'translate-y-0');
     }
   };
 
