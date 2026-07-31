@@ -45,7 +45,7 @@ function initHeroAnimation() {
   gsap.set([subtitle, cta], { opacity: 0, y: 16 });
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.fromTo('#hero-bg', { scale: 1.3 }, { scale: 1.16, duration: 2.4 })
+  tl.fromTo('#hero-bg', { scale: 1.12 }, { scale: 1.06, duration: 2.4 })
     .to(words, { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.08 }, 0.3)
     .to(subtitle, { opacity: 1, y: 0, duration: 0.8 }, '-=0.3')
     .to(cta, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
@@ -89,7 +89,7 @@ function initParallax() {
     const section = img.closest('section');
     if (!section) return;
     gsap.to(img, {
-      yPercent: 4,
+      yPercent: 2.5,
       ease: 'none',
       scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true },
     });
