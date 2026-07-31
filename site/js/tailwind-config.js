@@ -10,7 +10,7 @@ tailwind.config = {
         offwhite: '#F4F1E8',
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'serif'],
+        serif: ['FahKwang', 'serif'],
         sans: ['Montserrat', 'sans-serif'],
       },
     },

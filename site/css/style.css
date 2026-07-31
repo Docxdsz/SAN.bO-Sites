@@ -1,4 +1,20 @@
 /* css/style.css */
+@font-face {
+  font-family: 'FahKwang';
+  src: url('assets/fonts/FahKwang.ttc') format('truetype');
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('assets/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 html {
   scroll-behavior: auto; /* Lenis (added in Task 5) handles smooth scroll */
 }
