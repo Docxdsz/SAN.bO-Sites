@@ -26,6 +26,79 @@ body {
   background: linear-gradient(135deg, rgba(11, 23, 18, 0) 0%, #0B1712 45%, #172E23 55%, rgba(23, 46, 35, 0) 100%);
 }
 
+/* Trail — fixed vertical guide line, signature element inspired by an
+   earlier full design pass (index (1).html). Hidden below lg since a fixed
+   left-edge column competes with content on narrower viewports. */
+.trail {
+  position: fixed;
+  left: max(1.4rem, 3vw);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.trail::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, rgba(203, 169, 122, 0.35) 12%, rgba(203, 169, 122, 0.35) 88%, transparent);
+}
+
+.trail-fill {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%) scaleY(var(--sp, 0));
+  transform-origin: top;
+  background: linear-gradient(to bottom, transparent, #cba97a 12%, #a9824f 88%, transparent);
+  box-shadow: 0 0 8px rgba(203, 169, 122, 0.4);
+}
+
+.trail-dot {
+  position: absolute;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #cba97a;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+  transition: opacity 0.6s ease, box-shadow 0.6s ease;
+}
+
+.trail-dot.on {
+  opacity: 1;
+  box-shadow: 0 0 16px 2px rgba(203, 169, 122, 0.75);
+}
+
+.trail-word {
+  position: absolute;
+  left: 14px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #cba97a;
+  opacity: 0.4;
+  transition: opacity 0.6s ease;
+}
+
+.trail-word.on {
+  opacity: 0.85;
+}
+
+.trail-d1, .trail-w1 { top: 20%; }
+.trail-d2, .trail-w2 { top: 48%; }
+.trail-d3, .trail-w3 { top: 74%; }
+
 .grain-overlay {
   position: fixed;
   inset: 0;

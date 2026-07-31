@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyChrome();
   initLightbox();
   initLeadForm();
+  initTrail();
 });
 
 function initSmoothScroll() {
@@ -192,6 +193,47 @@ function initLightbox() {
     if (event.key === 'ArrowLeft') show(index - 1);
     if (event.key === 'ArrowRight') show(index + 1);
   });
+}
+
+function initTrail() {
+  const fill = document.querySelector('.trail-fill');
+  const dots = Array.from(document.querySelectorAll('.trail-dot'));
+  const words = Array.from(document.querySelectorAll('.trail-word'));
+  if (!fill) return;
+
+  const marks = [0.2, 0.48, 0.74];
+
+  function update() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? Math.min(1, scrollTop / docHeight) : 0;
+
+    fill.style.setProperty('--sp', progress.toFixed(4));
+    dots.forEach((dot, i) => dot.classList.toggle('on', progress >= marks[i] - 0.03));
+    words.forEach((word, i) => word.classList.toggle('on', progress >= marks[i] - 0.03));
+  }
+
+  // Prefer Lenis' own scroll event (same pattern initSmoothScroll uses for
+  // ScrollTrigger) so this stays in sync with the smoothed scroll position
+  // rather than the native, un-smoothed one.
+  if (window.__lenis) {
+    window.__lenis.on('scroll', update);
+  } else {
+    let ticking = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+      },
+      { passive: true },
+    );
+  }
+  update();
 }
 
 function initLeadForm() {
