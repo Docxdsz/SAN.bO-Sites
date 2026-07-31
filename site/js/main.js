@@ -14,6 +14,7 @@ function initSmoothScroll() {
   if (typeof Lenis === 'undefined' || typeof gsap === 'undefined') return;
 
   const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
+  window.__lenis = lenis;
   function raf(time) {
     lenis.raf(time);
     requestAnimationFrame(raf);
@@ -143,6 +144,7 @@ function initLightbox() {
   const prevBtn = document.getElementById('lightbox-prev');
   const nextBtn = document.getElementById('lightbox-next');
   let index = 0;
+  let previouslyFocused = null;
 
   const show = (i) => {
     index = (i + items.length) % items.length;
@@ -150,19 +152,34 @@ function initLightbox() {
     imageEl.alt = items[index].alt || '';
   };
   const open = (i) => {
+    previouslyFocused = document.activeElement;
     show(i);
     overlay.classList.remove('hidden');
     overlay.classList.add('flex');
+    overlay.setAttribute('aria-hidden', 'false');
     document.body.classList.add('overflow-hidden');
+    if (window.__lenis) window.__lenis.stop();
+    closeBtn.focus();
   };
   const close = () => {
     overlay.classList.add('hidden');
     overlay.classList.remove('flex');
+    overlay.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('overflow-hidden');
+    if (window.__lenis) window.__lenis.start();
     imageEl.src = '';
+    if (previouslyFocused) previouslyFocused.focus();
   };
 
-  items.forEach((img, i) => img.addEventListener('click', () => open(i)));
+  items.forEach((img, i) => {
+    img.addEventListener('click', () => open(i));
+    img.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        open(i);
+      }
+    });
+  });
   closeBtn.addEventListener('click', close);
   prevBtn.addEventListener('click', () => show(index - 1));
   nextBtn.addEventListener('click', () => show(index + 1));
@@ -189,8 +206,10 @@ function initLeadForm() {
     document.getElementById('form-contact-whatsapp'),
   ].filter(Boolean);
   const formWhatsappText = document.getElementById('form-contact-whatsapp-text');
+  const formContactWhatsapp = document.getElementById('form-contact-whatsapp');
   const formEmailLink = document.getElementById('form-contact-email');
   const formEmailText = document.getElementById('form-contact-email-text');
+  const formContactBlock = document.getElementById('form-contact-block');
 
   if (window.SITE_CONFIG && SITE_CONFIG.WHATSAPP_NUMBER && !SITE_CONFIG.WHATSAPP_NUMBER.startsWith('TODO')) {
     whatsappLinks.forEach((el) => {
@@ -199,11 +218,17 @@ function initLeadForm() {
       el.rel = 'noopener';
     });
     if (formWhatsappText) formWhatsappText.textContent = `+${SITE_CONFIG.WHATSAPP_NUMBER}`;
+    if (formContactWhatsapp) formContactWhatsapp.classList.remove('hidden');
+    if (formContactBlock) formContactBlock.classList.remove('hidden');
   }
 
   if (window.SITE_CONFIG && SITE_CONFIG.NOTIFY_EMAIL && !SITE_CONFIG.NOTIFY_EMAIL.startsWith('TODO')) {
-    if (formEmailLink) formEmailLink.href = `mailto:${SITE_CONFIG.NOTIFY_EMAIL}`;
+    if (formEmailLink) {
+      formEmailLink.href = `mailto:${SITE_CONFIG.NOTIFY_EMAIL}`;
+      formEmailLink.classList.remove('hidden');
+    }
     if (formEmailText) formEmailText.textContent = SITE_CONFIG.NOTIFY_EMAIL;
+    if (formContactBlock) formContactBlock.classList.remove('hidden');
   }
 
   form.addEventListener('submit', async (event) => {
