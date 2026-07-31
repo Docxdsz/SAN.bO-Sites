@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDividers();
   initParallax();
   initStickyChrome();
+  initLightbox();
   initLeadForm();
 });
 
@@ -130,6 +131,50 @@ function initStickyChrome() {
 
   const observer = new IntersectionObserver(([entry]) => (entry.isIntersecting ? hide() : show()), { threshold: 0 });
   observer.observe(hero);
+}
+
+function initLightbox() {
+  const items = Array.from(document.querySelectorAll('.js-lightbox'));
+  const overlay = document.getElementById('lightbox-overlay');
+  if (!items.length || !overlay) return;
+
+  const imageEl = document.getElementById('lightbox-image');
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  let index = 0;
+
+  const show = (i) => {
+    index = (i + items.length) % items.length;
+    imageEl.src = items[index].src;
+    imageEl.alt = items[index].alt || '';
+  };
+  const open = (i) => {
+    show(i);
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    document.body.classList.add('overflow-hidden');
+  };
+  const close = () => {
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+    document.body.classList.remove('overflow-hidden');
+    imageEl.src = '';
+  };
+
+  items.forEach((img, i) => img.addEventListener('click', () => open(i)));
+  closeBtn.addEventListener('click', close);
+  prevBtn.addEventListener('click', () => show(index - 1));
+  nextBtn.addEventListener('click', () => show(index + 1));
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) close();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (overlay.classList.contains('hidden')) return;
+    if (event.key === 'Escape') close();
+    if (event.key === 'ArrowLeft') show(index - 1);
+    if (event.key === 'ArrowRight') show(index + 1);
+  });
 }
 
 function initLeadForm() {

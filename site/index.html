@@ -63,7 +63,7 @@
       </div>
       <div class="js-reveal">
         <div class="overflow-hidden rounded-sm ring-1 ring-gold-600/40 ring-offset-4 ring-offset-offwhite">
-          <img src="assets/images/promise-garden.jpg" alt="" class="js-parallax w-full h-96 md:h-[32rem] object-cover scale-[1.08]" />
+          <img src="assets/images/promise-garden.jpg" alt="Jardim do Reserva Vereda" class="js-parallax js-lightbox cursor-zoom-in w-full h-96 md:h-[32rem] object-cover scale-[1.08]" />
         </div>
       </div>
     </div>
@@ -136,13 +136,13 @@
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 js-reveal">
         <div class="overflow-hidden rounded-sm ring-1 ring-gold-400/30 ring-offset-4 ring-offset-forest-950">
-          <img src="assets/images/gallery-piscina.jpg" alt="Piscina com deck e área de lazer do Reserva Vereda" class="w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
+          <img src="assets/images/gallery-piscina.jpg" alt="Piscina com deck e área de lazer do Reserva Vereda" class="js-lightbox cursor-zoom-in w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
         </div>
         <div class="overflow-hidden rounded-sm ring-1 ring-gold-400/30 ring-offset-4 ring-offset-forest-950">
-          <img src="assets/images/gallery-deck.jpg" alt="Deck de piscina com vista para o jardim do Reserva Vereda" class="w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
+          <img src="assets/images/gallery-deck.jpg" alt="Deck de piscina com vista para o jardim do Reserva Vereda" class="js-lightbox cursor-zoom-in w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
         </div>
         <div class="overflow-hidden rounded-sm ring-1 ring-gold-400/30 ring-offset-4 ring-offset-forest-950">
-          <img src="assets/images/gallery-mirante.jpg" alt="Fachada e terraços do Reserva Vereda ao entardecer" class="w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
+          <img src="assets/images/gallery-mirante.jpg" alt="Fachada e terraços do Reserva Vereda ao entardecer" class="js-lightbox cursor-zoom-in w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
         </div>
       </div>
     </div>
@@ -182,7 +182,7 @@
       </div>
       <div class="js-reveal">
         <div class="overflow-hidden rounded-sm ring-1 ring-gold-400/30 ring-offset-4 ring-offset-forest-800">
-          <img src="assets/images/amenidades-bg.jpg" alt="Deck e área de lazer do Reserva Vereda" class="w-full h-96 md:h-[32rem] object-cover" />
+          <img src="assets/images/amenidades-bg.jpg" alt="Deck e área de lazer do Reserva Vereda" class="js-lightbox cursor-zoom-in w-full h-96 md:h-[32rem] object-cover" />
         </div>
       </div>
     </div>
@@ -266,6 +266,19 @@
       <path d="M16 3C9.373 3 4 8.373 4 15c0 2.386.703 4.612 1.917 6.481L4 29l7.72-1.877A11.93 11.93 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16 3Zm0 21.818a9.77 9.77 0 0 1-4.98-1.363l-.357-.212-4.58 1.113 1.142-4.462-.233-.367A9.77 9.77 0 0 1 5.727 15C5.727 9.61 10.61 5.727 16 5.727S26.273 9.61 26.273 15 21.39 24.818 16 24.818Zm5.14-7.34c-.28-.14-1.66-.82-1.918-.914-.257-.093-.444-.14-.63.14-.187.28-.723.914-.887 1.1-.163.187-.327.21-.607.07-.28-.14-1.183-.436-2.253-1.39-.833-.742-1.396-1.66-1.56-1.94-.163-.28-.017-.43.123-.57.126-.126.28-.327.42-.49.14-.164.187-.28.28-.467.093-.187.047-.35-.023-.49-.07-.14-.63-1.52-.863-2.08-.227-.546-.457-.472-.63-.48h-.537c-.187 0-.49.07-.747.35-.257.28-.98.958-.98 2.337 0 1.38 1.004 2.712 1.144 2.9.14.187 1.977 3.02 4.79 4.235.669.289 1.19.462 1.596.591.67.213 1.28.183 1.763.111.538-.08 1.66-.678 1.894-1.333.234-.654.234-1.215.164-1.333-.07-.117-.257-.187-.537-.327Z"/>
     </svg>
   </a>
+
+  <div id="lightbox-overlay" class="fixed inset-0 z-[100] bg-forest-950/95 hidden items-center justify-center px-6" aria-hidden="true">
+    <button id="lightbox-close" aria-label="Fechar" class="absolute top-6 right-6 text-offwhite/70 hover:text-gold-400 transition-colors">
+      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+    </button>
+    <button id="lightbox-prev" aria-label="Imagem anterior" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-offwhite/70 hover:text-gold-400 transition-colors">
+      <svg class="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="lightbox-next" aria-label="Próxima imagem" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-offwhite/70 hover:text-gold-400 transition-colors">
+      <svg class="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <img id="lightbox-image" src="" alt="" class="max-w-full max-h-[85vh] object-contain" />
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
