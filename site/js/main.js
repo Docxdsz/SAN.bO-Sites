@@ -138,7 +138,14 @@ function initLeadForm() {
 
   const successEl = document.getElementById('form-success');
   const errorEl = document.getElementById('form-error');
-  const whatsappLinks = [document.getElementById('contact-whatsapp'), document.getElementById('whatsapp-float')].filter(Boolean);
+  const whatsappLinks = [
+    document.getElementById('contact-whatsapp'),
+    document.getElementById('whatsapp-float'),
+    document.getElementById('form-contact-whatsapp'),
+  ].filter(Boolean);
+  const formWhatsappText = document.getElementById('form-contact-whatsapp-text');
+  const formEmailLink = document.getElementById('form-contact-email');
+  const formEmailText = document.getElementById('form-contact-email-text');
 
   if (window.SITE_CONFIG && SITE_CONFIG.WHATSAPP_NUMBER && !SITE_CONFIG.WHATSAPP_NUMBER.startsWith('TODO')) {
     whatsappLinks.forEach((el) => {
@@ -146,6 +153,12 @@ function initLeadForm() {
       el.target = '_blank';
       el.rel = 'noopener';
     });
+    if (formWhatsappText) formWhatsappText.textContent = `+${SITE_CONFIG.WHATSAPP_NUMBER}`;
+  }
+
+  if (window.SITE_CONFIG && SITE_CONFIG.NOTIFY_EMAIL && !SITE_CONFIG.NOTIFY_EMAIL.startsWith('TODO')) {
+    if (formEmailLink) formEmailLink.href = `mailto:${SITE_CONFIG.NOTIFY_EMAIL}`;
+    if (formEmailText) formEmailText.textContent = SITE_CONFIG.NOTIFY_EMAIL;
   }
 
   form.addEventListener('submit', async (event) => {

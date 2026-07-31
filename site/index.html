@@ -199,20 +199,32 @@
   </section>
 
   <section id="form" class="relative py-24 md:py-32 px-6 bg-forest-900">
-    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 md:gap-12 items-center">
-      <div class="js-reveal hidden md:block">
-        <div class="overflow-hidden rounded-sm ring-1 ring-gold-400/30 ring-offset-4 ring-offset-forest-900">
-          <img src="assets/images/gallery-piscina.jpg" alt="Piscina do Reserva Vereda" class="js-parallax w-full h-[32rem] object-cover scale-115" />
-        </div>
-      </div>
-      <div class="js-reveal bg-forest-950/40 border border-gold-400/20 rounded-sm p-8 md:p-10">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+      <div class="js-reveal">
         <div class="js-divider mb-6 h-px w-16 bg-gold-400/60"></div>
         <p class="text-gold-400 text-xs md:text-sm uppercase tracking-[0.2em] mb-4">Acesso Antecipado &middot; Vagas Limitadas</p>
         <h2 class="font-serif text-2xl md:text-4xl text-offwhite mb-4">Seja um dos primeiros a descobrir.</h2>
-        <p class="text-offwhite/70 mb-8">
+        <p class="text-offwhite/70">
           Garanta acesso exclusivo às informações de pré-lançamento do Reserva Vereda. Nossa equipe entrará em contato para apresentar este projeto único.
         </p>
 
+        <div class="mt-8 pt-8 border-t border-offwhite/10 space-y-4">
+          <a id="form-contact-whatsapp" href="#" class="flex items-center gap-3 text-offwhite/70 hover:text-gold-400 text-sm transition-colors">
+            <svg class="w-4 h-4 shrink-0 fill-gold-400" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M16 3C9.373 3 4 8.373 4 15c0 2.386.703 4.612 1.917 6.481L4 29l7.72-1.877A11.93 11.93 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16 3Zm0 21.818a9.77 9.77 0 0 1-4.98-1.363l-.357-.212-4.58 1.113 1.142-4.462-.233-.367A9.77 9.77 0 0 1 5.727 15C5.727 9.61 10.61 5.727 16 5.727S26.273 9.61 26.273 15 21.39 24.818 16 24.818Zm5.14-7.34c-.28-.14-1.66-.82-1.918-.914-.257-.093-.444-.14-.63.14-.187.28-.723.914-.887 1.1-.163.187-.327.21-.607.07-.28-.14-1.183-.436-2.253-1.39-.833-.742-1.396-1.66-1.56-1.94-.163-.28-.017-.43.123-.57.126-.126.28-.327.42-.49.14-.164.187-.28.28-.467.093-.187.047-.35-.023-.49-.07-.14-.63-1.52-.863-2.08-.227-.546-.457-.472-.63-.48h-.537c-.187 0-.49.07-.747.35-.257.28-.98.958-.98 2.337 0 1.38 1.004 2.712 1.144 2.9.14.187 1.977 3.02 4.79 4.235.669.289 1.19.462 1.596.591.67.213 1.28.183 1.763.111.538-.08 1.66-.678 1.894-1.333.234-.654.234-1.215.164-1.333-.07-.117-.257-.187-.537-.327Z"/>
+            </svg>
+            <span id="form-contact-whatsapp-text">+55 11 90000-0000</span>
+          </a>
+          <a id="form-contact-email" href="mailto:contato@reservavereda.com.br" class="flex items-center gap-3 text-offwhite/70 hover:text-gold-400 text-sm transition-colors">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+              <rect x="2.5" y="4.5" width="19" height="15" rx="2" stroke-linejoin="round"/>
+              <path d="M3 6.5l9 6.5 9-6.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span id="form-contact-email-text">contato@reservavereda.com.br</span>
+          </a>
+        </div>
+      </div>
+      <div class="js-reveal bg-forest-950/40 border border-gold-400/20 rounded-sm p-8 md:p-10">
         <form id="lead-form" class="space-y-5 text-left" novalidate>
           <div>
             <label for="field-nome" class="block text-xs uppercase tracking-widest text-gold-400 mb-2">Nome</label>
