@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyChrome();
   initLightbox();
   initLeadForm();
+  initProfileCTA();
   initTrail();
 });
 
@@ -318,5 +319,17 @@ function initLeadForm() {
       errorEl.classList.remove('hidden');
       submitButton.disabled = false;
     }
+  });
+}
+
+function initProfileCTA() {
+  const perfilField = document.getElementById('field-perfil');
+  if (!perfilField) return;
+
+  document.querySelectorAll('.js-cta-profile').forEach((link) => {
+    link.addEventListener('click', () => {
+      const profile = link.dataset.profile;
+      if (profile) perfilField.value = profile;
+    });
   });
 }

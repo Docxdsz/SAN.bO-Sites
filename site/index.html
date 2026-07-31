@@ -23,11 +23,16 @@
   </div>
 
   <header id="site-header" class="fixed top-0 inset-x-0 z-50 -translate-y-full transition-transform duration-500 ease-out bg-forest-950/90 backdrop-blur-sm border-b border-offwhite/10">
-    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
       <img src="assets/logo.svg" alt="Reserva Vereda" class="h-7 md:h-8" />
-      <a href="#form" class="border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-forest-950 transition-all duration-300 px-5 py-2 text-xs uppercase tracking-widest">
-        Peça informações
-      </a>
+      <div class="flex items-center gap-2 md:gap-3">
+        <a href="#form" data-profile="Cliente" class="js-cta-profile border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-forest-950 transition-all duration-300 px-3 md:px-5 py-2 text-[11px] md:text-xs uppercase tracking-widest whitespace-nowrap">
+          Sou cliente
+        </a>
+        <a href="#form" data-profile="Parceiro/Imobiliária" class="js-cta-profile border border-offwhite/40 text-offwhite/80 hover:bg-offwhite/10 hover:text-offwhite transition-all duration-300 px-3 md:px-5 py-2 text-[11px] md:text-xs uppercase tracking-widest whitespace-nowrap">
+          Sou parceiro
+        </a>
+      </div>
     </div>
   </header>
 
@@ -44,9 +49,14 @@
       <p id="hero-subtitle" class="font-sans text-base md:text-lg text-offwhite/80 mb-10">
         Um novo capítulo de exclusividade e bem-estar está para começar. Prepare-se para viver o extraordinário.
       </p>
-      <a href="#form" id="hero-cta" class="inline-block border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-forest-950 hover:shadow-[0_0_20px_rgba(203,169,122,0.5)] transition-all duration-300 px-8 py-3 tracking-widest text-sm uppercase">
-        Peça informações
-      </a>
+      <div id="hero-cta" class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#form" data-profile="Cliente" class="js-cta-profile inline-block border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-forest-950 hover:shadow-[0_0_20px_rgba(203,169,122,0.5)] transition-all duration-300 px-8 py-3 tracking-widest text-sm uppercase">
+          Sou cliente e quero garantir meu espaço
+        </a>
+        <a href="#form" data-profile="Parceiro/Imobiliária" class="js-cta-profile inline-block border border-offwhite/50 text-offwhite hover:bg-offwhite/10 transition-all duration-300 px-8 py-3 tracking-widest text-sm uppercase">
+          Sou parceiro e quero vender este projeto
+        </a>
+      </div>
     </div>
   </section>
 
@@ -244,6 +254,13 @@
           <div>
             <label for="field-email" class="sr-only">E-mail</label>
             <input type="email" id="field-email" name="email" required placeholder="E-mail" class="w-full bg-transparent border-0 border-b border-offwhite/30 focus:border-gold-400 outline-none px-0 py-3 text-offwhite placeholder-offwhite/40 transition-colors" />
+          </div>
+          <div>
+            <label for="field-perfil" class="block text-offwhite/50 text-xs uppercase tracking-widest mb-2">Perfil</label>
+            <select id="field-perfil" name="perfil" required class="w-full bg-forest-900 border-0 border-b border-offwhite/30 focus:border-gold-400 outline-none px-0 py-3 text-offwhite transition-colors">
+              <option value="Cliente">Cliente</option>
+              <option value="Parceiro/Imobiliária">Parceiro/Imobiliária</option>
+            </select>
           </div>
           <div>
             <label for="field-telefone" class="sr-only">Telefone / WhatsApp</label>
