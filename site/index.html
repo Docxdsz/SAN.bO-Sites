@@ -23,8 +23,8 @@
   </div>
 
   <header id="site-header" class="fixed top-0 inset-x-0 z-50 -translate-y-full transition-transform duration-500 ease-out bg-forest-950/90 backdrop-blur-sm border-b border-offwhite/10">
-    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
-      <img src="assets/logo.svg" alt="Reserva Vereda" class="h-7 md:h-8" />
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-2 sm:gap-4">
+      <img src="assets/logo.svg" alt="Reserva Vereda" class="h-6 sm:h-7 md:h-8 shrink-0" />
       <nav class="hidden lg:flex items-center gap-6 text-xs uppercase tracking-widest text-offwhite/70">
         <a href="#hero" class="hover:text-gold-400 transition-colors">Início</a>
         <a href="#promessa" class="hover:text-gold-400 transition-colors">A Promessa</a>
@@ -32,12 +32,12 @@
         <a href="#conectividade" class="hover:text-gold-400 transition-colors">Conectividade</a>
         <a href="#form" class="hover:text-gold-400 transition-colors">Contato</a>
       </nav>
-      <div class="flex items-center gap-2 md:gap-3">
-        <a href="#form" data-profile="Cliente" class="js-cta-profile border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-forest-950 transition-all duration-300 px-3 md:px-5 py-2 text-[11px] md:text-xs uppercase tracking-widest whitespace-nowrap">
-          Sou cliente
+      <div class="flex items-center gap-1.5 sm:gap-2 md:gap-3">
+        <a href="#form" data-profile="Cliente" class="js-cta-profile border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-forest-950 transition-all duration-300 px-2.5 sm:px-3 md:px-5 py-2 text-[10px] sm:text-[11px] md:text-xs uppercase tracking-widest whitespace-nowrap">
+          <span class="sm:hidden">Cliente</span><span class="hidden sm:inline">Sou cliente</span>
         </a>
-        <a href="#form" data-profile="Parceiro/Imobiliária" class="js-cta-profile border border-offwhite/40 text-offwhite/80 hover:bg-offwhite/10 hover:text-offwhite transition-all duration-300 px-3 md:px-5 py-2 text-[11px] md:text-xs uppercase tracking-widest whitespace-nowrap">
-          Sou parceiro
+        <a href="#form" data-profile="Parceiro/Imobiliária" class="js-cta-profile border border-offwhite/40 text-offwhite/80 hover:bg-offwhite/10 hover:text-offwhite transition-all duration-300 px-2.5 sm:px-3 md:px-5 py-2 text-[10px] sm:text-[11px] md:text-xs uppercase tracking-widest whitespace-nowrap">
+          <span class="sm:hidden">Parceiro</span><span class="hidden sm:inline">Sou parceiro</span>
         </a>
       </div>
     </div>
@@ -357,7 +357,7 @@
           </div>
           <div>
             <label for="field-telefone" class="sr-only">Telefone / WhatsApp</label>
-            <input type="tel" id="field-telefone" name="telefone" required pattern="[0-9()\-\s+]{8,20}" placeholder="Telefone / WhatsApp" class="w-full bg-transparent border-0 border-b border-offwhite/30 focus:border-gold-400 outline-none px-0 py-3 text-offwhite placeholder-offwhite/40 transition-colors" />
+            <input type="tel" id="field-telefone" name="telefone" required pattern="[0-9\(\)\s+\-]{8,20}" placeholder="Telefone / WhatsApp" class="w-full bg-transparent border-0 border-b border-offwhite/30 focus:border-gold-400 outline-none px-0 py-3 text-offwhite placeholder-offwhite/40 transition-colors" />
           </div>
           <button type="submit" class="w-full bg-gold-400 hover:bg-gold-600 hover:shadow-[0_0_20px_rgba(203,169,122,0.5)] text-forest-950 uppercase tracking-widest text-sm py-4 md:py-5 rounded-sm transition-all duration-300">
             Quero receber informações exclusivas
@@ -377,7 +377,7 @@
 
   <footer id="site-footer" class="py-12 px-6 bg-forest-950 border-t border-offwhite/10 text-center">
     <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-6">
-      <img src="assets/images/elleven-wax-seal-footer.png" alt="Selo Elleven Engenharia — 7º Produto Elleven em Cotia" class="h-10 md:h-12 opacity-90" />
+      <img src="assets/images/elleven-wax-seal-footer.png" alt="Selo Elleven Engenharia — 7º Produto Elleven em Cotia" class="h-16 md:h-20 opacity-90" />
       <img src="assets/logo-cs.png" alt="CS Empreendimentos Imobiliários" class="h-6 md:h-8 opacity-90" />
       <img src="assets/logo-sanbo.png" alt="Agência SAN.bO" class="h-6 md:h-8 opacity-90" />
     </div>
@@ -408,8 +408,8 @@
     </svg>
   </a>
 
-  <div id="elleven-seal" class="fixed bottom-6 left-6 z-50 flex items-center px-3 py-2 rounded-full bg-forest-950/60 backdrop-blur-sm border border-offwhite/10 opacity-0 translate-y-4 pointer-events-none transition-all duration-500" aria-hidden="true">
-    <img src="assets/images/elleven-wax-seal-sticky.png" alt="Selo Elleven Engenharia — 7º Produto Elleven em Cotia" class="h-9 md:h-10 w-auto" />
+  <div id="elleven-seal" class="fixed bottom-4 left-4 z-50 flex items-center p-1.5 rounded-full bg-forest-950/60 backdrop-blur-sm border border-offwhite/10 opacity-0 translate-y-4 pointer-events-none transition-all duration-500" aria-hidden="true">
+    <img src="assets/images/elleven-wax-seal-sticky.png" alt="Selo Elleven Engenharia — 7º Produto Elleven em Cotia" class="h-14 md:h-16 w-auto" />
   </div>
 
   <div id="lightbox-overlay" class="fixed inset-0 z-[100] bg-forest-950/95 hidden items-center justify-center px-6" role="dialog" aria-modal="true" aria-label="Galeria de imagens" aria-hidden="true">
