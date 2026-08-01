@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDividers();
   initParallax();
   initStickyChrome();
+  initHeroSealDock();
   initLightbox();
   initLeadForm();
   initProfileCTA();
@@ -53,6 +54,26 @@ function initHeroAnimation() {
     .to(words, { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.08 }, 0.3)
     .to(subtitle, { opacity: 1, y: 0, duration: 0.8 }, '-=0.3')
     .to(cta, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
+}
+
+function initHeroSealDock() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  const seal = document.getElementById('elleven-seal');
+  const hero = document.getElementById('hero');
+  if (!seal || !hero) return;
+
+  gsap.fromTo(
+    seal,
+    { scale: 1.65, x: () => window.innerWidth * 0.14, y: () => -window.innerHeight * 0.28 },
+    {
+      scale: 1,
+      x: 0,
+      y: 0,
+      ease: 'none',
+      scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
+    }
+  );
 }
 
 function initScrollReveals() {
@@ -103,7 +124,6 @@ function initParallax() {
 function initStickyChrome() {
   const header = document.getElementById('site-header');
   const whatsapp = document.getElementById('whatsapp-float');
-  const ellevenSeal = document.getElementById('elleven-seal');
   const hero = document.getElementById('hero');
   if (!hero) return;
 
@@ -116,10 +136,6 @@ function initStickyChrome() {
       whatsapp.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
       whatsapp.classList.add('opacity-100', 'translate-y-0');
     }
-    if (ellevenSeal) {
-      ellevenSeal.classList.remove('opacity-0', 'translate-y-4');
-      ellevenSeal.classList.add('opacity-100', 'translate-y-0');
-    }
   };
   const hide = () => {
     if (header) {
@@ -129,10 +145,6 @@ function initStickyChrome() {
     if (whatsapp) {
       whatsapp.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
       whatsapp.classList.remove('opacity-100', 'translate-y-0');
-    }
-    if (ellevenSeal) {
-      ellevenSeal.classList.add('opacity-0', 'translate-y-4');
-      ellevenSeal.classList.remove('opacity-100', 'translate-y-0');
     }
   };
 
