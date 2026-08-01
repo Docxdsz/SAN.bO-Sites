@@ -124,3 +124,43 @@ body {
   background-repeat: repeat;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+/* Localização convenience grid: table-like dividers between categories.
+   Mobile stacks 1-col with horizontal rules; sm (3-col) and lg (6-col)
+   switch to vertical rules, reset at each row's first column so the line
+   never appears on the leading edge of the grid. */
+.loc-grid > .loc-cat {
+  border-top: 1px solid rgba(244, 241, 232, 0.1);
+  padding-top: 1.5rem;
+}
+
+.loc-grid > .loc-cat:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+@media (min-width: 640px) {
+  .loc-grid > .loc-cat {
+    border-top: 0;
+    padding-top: 0;
+    border-left: 1px solid rgba(244, 241, 232, 0.1);
+    padding-left: 1.25rem;
+  }
+
+  .loc-grid > .loc-cat:nth-child(3n+1) {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .loc-grid > .loc-cat:nth-child(3n+1) {
+    border-left: 1px solid rgba(244, 241, 232, 0.1);
+    padding-left: 1.5rem;
+  }
+
+  .loc-grid > .loc-cat:nth-child(6n+1) {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
