@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initParallax();
   initStickyChrome();
   initHeroSealDock();
+  initAnchorScroll();
   initLightbox();
   initLeadForm();
   initProfileCTA();
@@ -28,6 +29,33 @@ function initSmoothScroll() {
     gsap.registerPlugin(ScrollTrigger);
     lenis.on('scroll', ScrollTrigger.update);
   }
+}
+
+function initAnchorScroll() {
+  const header = document.getElementById('site-header');
+
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    const id = link.getAttribute('href');
+    if (!id || id.length < 2) return;
+    const target = document.querySelector(id);
+    if (!target) return;
+
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const headerOffset = header ? header.getBoundingClientRect().height : 0;
+
+      if (window.__lenis) {
+        window.__lenis.scrollTo(target, {
+          offset: -(headerOffset + 16),
+          duration: 1.6,
+          easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+        });
+      } else {
+        const y = target.getBoundingClientRect().top + window.scrollY - headerOffset - 16;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+  });
 }
 
 function splitIntoWords(el) {
@@ -293,6 +321,15 @@ function initTrail() {
     if (trail) {
       trail.style.setProperty('--trail-gradient', buildGradient());
     }
+
+    // The fill bar is scaled (not clip-revealed), so a position-mapped
+    // gradient would get visually compressed as it grows and show colors
+    // that don't match what's actually on screen — give it a single solid
+    // color instead, sampled at the viewport center.
+    const fillAccent = colorAt(window.innerHeight / 2);
+    fill.style.setProperty('--trail-mid', `rgb(${fillAccent})`);
+    fill.style.setProperty('--trail-end', `rgb(${fillAccent})`);
+    fill.style.setProperty('--trail-glow', `rgba(${fillAccent}, 0.6)`);
 
     dots.forEach((dot, i) => {
       const accent = colorAt(window.innerHeight * marks[i]);
