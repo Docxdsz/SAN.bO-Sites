@@ -218,12 +218,68 @@ function initLightbox() {
 }
 
 function initTrail() {
+  const trail = document.querySelector('.trail');
   const fill = document.querySelector('.trail-fill');
   const dots = Array.from(document.querySelectorAll('.trail-dot'));
   const words = Array.from(document.querySelectorAll('.trail-word'));
+  const lightSections = Array.from(document.querySelectorAll('[data-trail-light]'));
   if (!fill) return;
 
-  const marks = [0.2, 0.48, 0.74];
+  const marks = [0.2, 0.48, 0.74]; // also each dot/word's fixed top-% down the viewport (see CSS)
+
+  // Each point along the trail shows the color of whatever section background
+  // is actually behind it right now — gold over dark sections, forest green
+  // over [data-trail-light] ones — blending gradually across a short zone
+  // around each section's edge as it crosses that point, rather than the
+  // whole bar switching color together.
+  const DARK_ACCENT = [203, 169, 122];
+  const LIGHT_ACCENT = [23, 46, 35];
+  const BLEND_ZONE_PX = 160;
+
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const lerpRGB = (c1, c2, t) => [lerp(c1[0], c2[0], t), lerp(c1[1], c2[1], t), lerp(c1[2], c2[2], t)];
+  const rgbStr = ([r, g, b]) => `${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}`;
+
+  // lightness (0 = dark/gold, 1 = light/green) of whatever is behind a given
+  // viewport Y position (px from top of the viewport).
+  function lightnessAt(yViewport) {
+    const yAbs = window.scrollY + yViewport;
+    let lightness = 0;
+    lightSections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const top = rect.top + window.scrollY;
+      const bottom = rect.bottom + window.scrollY;
+      let v;
+      if (yAbs >= top && yAbs <= bottom) {
+        v = 1;
+      } else if (yAbs < top) {
+        v = 1 - Math.min(1, (top - yAbs) / BLEND_ZONE_PX);
+      } else {
+        v = 1 - Math.min(1, (yAbs - bottom) / BLEND_ZONE_PX);
+      }
+      lightness = Math.max(lightness, v);
+    });
+    return Math.max(0, Math.min(1, lightness));
+  }
+
+  function colorAt(yViewport) {
+    return rgbStr(lerpRGB(DARK_ACCENT, LIGHT_ACCENT, lightnessAt(yViewport)));
+  }
+
+  function buildGradient() {
+    const h = window.innerHeight;
+    const eventYs = new Set([0, h]);
+    lightSections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      [rect.top - BLEND_ZONE_PX, rect.top, rect.bottom, rect.bottom + BLEND_ZONE_PX].forEach((y) => {
+        if (y > 0 && y < h) eventYs.add(y);
+      });
+    });
+    const stops = Array.from(eventYs)
+      .sort((a, b) => a - b)
+      .map((y) => `rgb(${colorAt(y)}) ${((y / h) * 100).toFixed(2)}%`);
+    return `linear-gradient(to bottom, ${stops.join(', ')})`;
+  }
 
   function update() {
     const scrollTop = window.scrollY;
@@ -233,6 +289,23 @@ function initTrail() {
     fill.style.setProperty('--sp', progress.toFixed(4));
     dots.forEach((dot, i) => dot.classList.toggle('on', progress >= marks[i] - 0.03));
     words.forEach((word, i) => word.classList.toggle('on', progress >= marks[i] - 0.03));
+
+    if (trail) {
+      trail.style.setProperty('--trail-gradient', buildGradient());
+    }
+
+    dots.forEach((dot, i) => {
+      const accent = colorAt(window.innerHeight * marks[i]);
+      dot.style.setProperty('--trail-solid', `rgb(${accent})`);
+      dot.style.setProperty('--trail-glow-soft', `rgba(${accent}, 0.4)`);
+      dot.style.setProperty('--trail-glow-strong', `rgba(${accent}, 0.85)`);
+    });
+
+    words.forEach((word, i) => {
+      const accent = colorAt(window.innerHeight * marks[i]);
+      word.style.setProperty('--trail-mid', `rgb(${accent})`);
+      word.style.setProperty('--trail-glow', `rgba(${accent}, 0.7)`);
+    });
   }
 
   // Prefer Lenis' own scroll event (same pattern initSmoothScroll uses for

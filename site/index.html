@@ -67,7 +67,7 @@
     </div>
   </section>
 
-  <section id="promessa" class="relative py-24 md:py-32 px-6 bg-offwhite">
+  <section id="promessa" data-trail-light class="relative py-24 md:py-32 px-6 bg-offwhite">
     <div class="absolute top-0 inset-x-0 h-12 md:h-20 leading-none pointer-events-none" aria-hidden="true">
       <svg viewBox="0 0 1440 100" preserveAspectRatio="none" class="w-full h-full text-forest-950 fill-current">
         <path d="M0,0 L1440,0 L1440,55 C1200,15 960,95 720,45 C480,10 240,80 0,35 Z" />
@@ -83,8 +83,8 @@
         </p>
       </div>
       <div class="js-reveal">
-        <div class="gold-frame rounded-3xl">
-          <div class="overflow-hidden rounded-3xl">
+        <div class="gold-frame organic-frame">
+          <div class="overflow-hidden organic-frame">
             <img src="assets/images/promise-garden.jpg" alt="Jardim do Reserva Vereda" tabindex="0" role="button" class="js-parallax js-lightbox cursor-zoom-in w-full h-96 md:h-[32rem] object-cover scale-[1.08]" />
           </div>
         </div>
@@ -202,10 +202,13 @@
     <p class="text-offwhite/30 text-[10px] text-center mt-8">Fonte: Google Maps</p>
   </section>
 
-  <section id="conectividade" class="relative py-24 md:py-32 px-6 bg-forest-900">
+  <section id="conectividade" data-trail-light class="relative py-24 md:py-32 px-6 bg-forest-900 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="assets/images/conectividade-bg.jpg" alt="" class="w-full h-full object-cover" />
+    </div>
     <div class="absolute top-0 inset-x-0 h-12 md:h-20 leading-none pointer-events-none" aria-hidden="true">
       <svg viewBox="0 0 1440 100" preserveAspectRatio="none" class="w-full h-full text-forest-800 fill-current">
-        <path d="M0,0 L1440,0 L1440,55 C1200,15 960,95 720,45 C480,10 240,80 0,35 Z" />
+        <path d="M0,0 L1440,0 L1440,26 C1200,7 960,45 720,21 C480,5 240,38 0,17 Z" />
       </svg>
     </div>
     <div class="max-w-3xl mx-auto text-center js-reveal mb-16">
@@ -214,8 +217,8 @@
       <h2 class="font-serif text-3xl md:text-5xl text-offwhite mb-4">Conectado ao que importa.</h2>
       <p class="text-offwhite/70 max-w-xl mx-auto">A proximidade com os principais centros urbanos e comerciais garante praticidade e otimização do seu tempo.</p>
     </div>
-    <div class="relative max-w-4xl mx-auto">
-      <div class="hidden md:block absolute left-0 right-0 top-[7px] h-px bg-gradient-to-r from-transparent via-gold-400/30 to-transparent" aria-hidden="true"></div>
+    <div class="relative max-w-4xl mx-auto bg-forest-950/70 backdrop-blur-sm rounded-3xl shadow-xl px-6 py-10 md:px-10 md:py-12">
+      <div class="hidden md:block absolute left-6 right-6 md:left-10 md:right-10 top-[47px] md:top-[55px] h-px bg-gradient-to-r from-transparent via-gold-400/30 to-transparent" aria-hidden="true"></div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 md:gap-y-0">
         <div class="relative text-center js-reveal">
           <span class="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 w-[15px] h-[15px] rounded-full border-2 border-gold-400 bg-forest-900"></span>
@@ -247,14 +250,14 @@
         </div>
       </div>
     </div>
+    <div class="absolute bottom-0 inset-x-0 h-12 md:h-20 leading-none pointer-events-none" aria-hidden="true">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none" class="w-full h-full text-forest-950 fill-current">
+        <path d="M0,100 L1440,100 L1440,74 C1200,93 960,55 720,79 C480,95 240,62 0,83 Z" />
+      </svg>
+    </div>
   </section>
 
   <section id="galeria" class="relative py-24 md:py-32 px-6 bg-forest-950">
-    <div class="absolute top-0 inset-x-0 h-12 md:h-20 leading-none pointer-events-none" aria-hidden="true">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none" class="w-full h-full text-forest-900 fill-current">
-        <path d="M0,0 L1440,0 L1440,55 C1200,15 960,95 720,45 C480,10 240,80 0,35 Z" />
-      </svg>
-    </div>
     <div class="max-w-7xl mx-auto">
       <div class="text-center js-reveal mb-14">
         <div class="js-divider mx-auto mb-6 h-1 w-20 bg-gradient-to-r from-transparent via-gold-400 to-transparent"></div>
@@ -263,18 +266,18 @@
         <p class="text-offwhite/70 max-w-xl mx-auto">Lazer completo: espaços pensados para cada momento do seu dia a dia.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 js-reveal">
-        <div class="gold-frame rounded-3xl">
-          <div class="overflow-hidden rounded-3xl">
+        <div class="gold-frame organic-frame">
+          <div class="overflow-hidden organic-frame">
             <img src="assets/images/gallery-piscina.jpg" alt="Piscina com deck e área de lazer do Reserva Vereda" tabindex="0" role="button" class="js-lightbox cursor-zoom-in w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
           </div>
         </div>
-        <div class="gold-frame rounded-3xl">
-          <div class="overflow-hidden rounded-3xl">
+        <div class="gold-frame organic-frame-b">
+          <div class="overflow-hidden organic-frame-b">
             <img src="assets/images/gallery-deck.jpg" alt="Deck de piscina com vista para o jardim do Reserva Vereda" tabindex="0" role="button" class="js-lightbox cursor-zoom-in w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
           </div>
         </div>
-        <div class="gold-frame rounded-3xl">
-          <div class="overflow-hidden rounded-3xl">
+        <div class="gold-frame organic-frame-c">
+          <div class="overflow-hidden organic-frame-c">
             <img src="assets/images/gallery-mirante.jpg" alt="Fachada e terraços do Reserva Vereda ao entardecer" tabindex="0" role="button" class="js-lightbox cursor-zoom-in w-full aspect-[4/3] object-cover transition-transform duration-500 hover:scale-105" />
           </div>
         </div>
@@ -348,7 +351,7 @@
 
   <footer id="site-footer" class="py-12 px-6 bg-forest-950 border-t border-offwhite/10 text-center">
     <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-6">
-      <img src="assets/images/elleven-wax-seal-footer.png" alt="Selo Elleven Engenharia — 7º Produto Elleven em Cotia" class="h-16 md:h-20 opacity-90" />
+      <img src="assets/images/elleven-logo-secundario.png" alt="Elleven Engenharia" class="h-6 md:h-8 opacity-90" />
       <img src="assets/logo-cs.png" alt="CS Empreendimentos Imobiliários" class="h-6 md:h-8 opacity-90" />
       <img src="assets/logo-sanbo.png" alt="Agência SAN.bO" class="h-6 md:h-8 opacity-90" />
     </div>
@@ -379,7 +382,7 @@
     </svg>
   </a>
 
-  <div id="elleven-seal" class="fixed bottom-5 left-5 z-50 origin-bottom-left" aria-hidden="true">
+  <div id="elleven-seal" class="fixed bottom-5 left-5 lg:left-20 z-50 origin-bottom-left" aria-hidden="true">
     <img src="assets/images/elleven-wax-seal-footer.png" alt="Selo Elleven Engenharia — 7º Produto Elleven em Cotia" class="h-24 md:h-28 w-auto drop-shadow-[0_6px_16px_rgba(0,0,0,0.5)]" />
   </div>
 
