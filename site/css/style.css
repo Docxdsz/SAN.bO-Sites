@@ -206,8 +206,9 @@ body {
   align-items: center;
   gap: 0;
   padding: 0 6vw;
-  height: 780px;
+  height: 640px;
   overflow-x: auto;
+  overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
@@ -259,14 +260,14 @@ body {
   right: 44px;
   background: #FFFFFF;
   border-radius: 1.25rem;
-  padding: 0.9rem;
+  padding: 0.75rem;
   box-shadow: 0 10px 30px rgba(11, 23, 18, 0.09);
 }
 .track-card[data-row="top"] .track-panel {
-  bottom: 12px;
+  bottom: 10px;
 }
 .track-card[data-row="bottom"] .track-panel {
-  top: 12px;
+  top: 10px;
 }
 
 .track-marker {
@@ -276,15 +277,15 @@ body {
   text-align: center;
 }
 .track-card[data-row="top"] .track-marker {
-  top: 12px;
+  top: 10px;
 }
 .track-card[data-row="bottom"] .track-marker {
-  bottom: 12px;
+  bottom: 10px;
 }
 
 .track-photo {
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: 0.85rem;
   display: block;
@@ -292,14 +293,14 @@ body {
 
 .track-photo-fallback {
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   border-radius: 0.85rem;
   background: linear-gradient(160deg, #172E23, #0B1712);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .track-pill {

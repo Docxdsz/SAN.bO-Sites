@@ -27,7 +27,7 @@ function trackStatusPillHTML(entry) {
 function trackCardHTML(entry) {
   const photo = entry.photo
     ? `<img src="${entry.photo}" alt="${entry.name}" class="track-photo" loading="lazy" />`
-    : `<div class="track-photo-fallback"><span class="font-serif text-offwhite text-lg">${entry.name}</span></div>`;
+    : `<div class="track-photo-fallback"><span class="font-serif text-offwhite text-base leading-snug">${entry.name}</span></div>`;
 
   // Cards where launch/location are null (5 not-yet-delivered projects have no
   // launch line; Style Um alone has no location) still render an invisible
@@ -44,23 +44,23 @@ function trackCardHTML(entry) {
     : `<div class="invisible flex items-center gap-2 mb-1.5">${TRACK_ICON_PIN}<span class="text-sm">&nbsp;</span></div>`;
 
   const unitsText = entry.towers ? `${entry.units} · ${entry.towers}` : entry.units;
-  const unitsRow = `<div class="flex items-center gap-2 mb-3">${TRACK_ICON_BUILDING}<span class="text-forest-950/75 text-sm">${unitsText}</span></div>`;
+  const unitsRow = `<div class="flex items-center gap-2 mb-2">${TRACK_ICON_BUILDING}<span class="text-forest-950/75 text-sm">${unitsText}</span></div>`;
 
   return `
     <div class="track-card${entry.highlight ? ' track-highlight' : ''}" data-row="${entry.row}" data-id="${entry.id}">
       <div class="track-panel">
         <div class="track-photo-wrap">${photo}</div>
-        <div class="track-info pt-4">
+        <div class="track-info pt-3">
           ${launchLine}
-          <p class="font-serif text-forest-950 text-xl mb-2">${entry.name}</p>
+          <p class="font-serif text-forest-950 text-lg mb-1.5 leading-tight">${entry.name}</p>
           ${locationRow}
           ${unitsRow}
-          <div class="pt-3 border-t border-forest-950/10">
+          <div class="pt-2 border-t border-forest-950/10">
             <p class="text-gold-600 text-sm font-medium">VGV: ${entry.vgv}</p>
           </div>
         </div>
       </div>
-      <div class="track-marker text-center py-3">
+      <div class="track-marker text-center py-2">
         ${trackStatusPillHTML(entry)}
       </div>
       <span class="track-dot" aria-hidden="true"></span>
@@ -121,6 +121,45 @@ function initTrackReveal() {
   });
 }
 
+function initTrackFloatingUIHide() {
+  // The fixed Elleven seal (bottom-left) and WhatsApp button (bottom-right)
+  // float above every section — fine everywhere else, but this section's
+  // bottom-row cards can render right where those buttons sit (worst during
+  // the desktop pin, which holds the section in place for a while; also
+  // happens briefly while scrolling past on mobile). Temporarily hide both
+  // while #trajetoria is substantially in view.
+  //
+  // main.js's initStickyChrome() runs its own IntersectionObserver on #hero
+  // that toggles opacity-0/opacity-100 on #whatsapp-float too. Toggling the
+  // same classes from a second observer is a real race: both observers can
+  // fire their first callback in the same tick (e.g. on a fast/instant
+  // scroll jump), and whichever happens to run last wins, so the button
+  // could stay visible or hidden unpredictably depending on scroll speed.
+  // Setting inline style.opacity here sidesteps that entirely — inline
+  // style always wins over a class-based opacity utility in the cascade,
+  // regardless of which observer's callback happened to run last — and
+  // clearing it (style.opacity = '') on exit hands control back to
+  // whatever class state initStickyChrome has already set.
+  const section = document.getElementById('trajetoria');
+  const seal = document.getElementById('elleven-seal');
+  const whatsapp = document.getElementById('whatsapp-float');
+  if (!section || (!seal && !whatsapp) || typeof IntersectionObserver === 'undefined') return;
+
+  const setHidden = (hidden) => {
+    [seal, whatsapp].forEach((el) => {
+      if (!el) return;
+      el.style.opacity = hidden ? '0' : '';
+      el.style.pointerEvents = hidden ? 'none' : '';
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    ([entry]) => setHidden(entry.isIntersecting),
+    { threshold: 0.15 }
+  );
+  observer.observe(section);
+}
+
 function initTrackScroll() {
   const viewport = document.getElementById('track-viewport');
   const track = document.getElementById('track-track');
@@ -155,5 +194,6 @@ function initTrackScroll() {
 document.addEventListener('DOMContentLoaded', () => {
   renderTrackRecord();
   initTrackReveal();
+  initTrackFloatingUIHide();
   initTrackScroll();
 });
