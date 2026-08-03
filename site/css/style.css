@@ -193,3 +193,113 @@ body {
     padding-left: 0;
   }
 }
+
+/* Track Record timeline */
+.track-viewport {
+  position: relative;
+  width: 100%;
+}
+
+.track-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 6vw;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.track-track::-webkit-scrollbar {
+  height: 6px;
+}
+.track-track::-webkit-scrollbar-thumb {
+  background: rgba(203, 169, 122, 0.4);
+  border-radius: 3px;
+}
+
+.track-card {
+  scroll-snap-align: center;
+  flex: 0 0 auto;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 0 20px;
+}
+
+.track-card[data-row="bottom"] {
+  flex-direction: column-reverse;
+}
+
+.track-card .track-photo-wrap {
+  order: 1;
+}
+.track-card[data-row="bottom"] .track-photo-wrap {
+  order: 3;
+}
+
+.track-card .track-info {
+  order: 2;
+}
+
+.track-card .track-marker {
+  order: 2;
+}
+.track-card[data-row="top"] .track-marker {
+  order: 3;
+}
+.track-card[data-row="bottom"] .track-marker {
+  order: 1;
+}
+
+.track-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 1.5rem;
+}
+
+.track-photo-fallback {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 1.5rem;
+  background: linear-gradient(160deg, #172E23, #0B1712);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.track-line {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(203, 169, 122, 0.5) 4%, rgba(203, 169, 122, 0.5) 96%, transparent);
+  margin: 2.5rem 0;
+}
+
+.track-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #CBA97A;
+  transform: translate(-50%, -50%);
+}
+
+.track-card.track-highlight .track-photo,
+.track-card.track-highlight .track-photo-fallback {
+  outline: 2px solid #CBA97A;
+  outline-offset: 4px;
+  box-shadow: 0 0 30px rgba(203, 169, 122, 0.35);
+}
+
+@media (min-width: 1024px) {
+  .track-track {
+    scroll-snap-type: none;
+  }
+}
