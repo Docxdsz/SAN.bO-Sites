@@ -205,5 +205,17 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTrackRecord();
   initTrackReveal();
   initTrackFloatingUIHide();
-  initTrackScroll();
 });
+
+// initTrackScroll() is deferred to the 'load' event (fires once every
+// script has finished running, after DOMContentLoaded) rather than grouped
+// with the functions above. This file's DOMContentLoaded listener runs
+// before main.js's (script tag order), so if initTrackScroll() ran here,
+// its ScrollTrigger pin would be created before the hero's own pin
+// (main.js's initHeroScrollStory) has inserted its pin-spacer — GSAP then
+// calculates this pin's start position against a page ~1980px shorter
+// than reality (the hero pin's reserved scroll distance), causing the
+// whole timeline to activate far too early and render pinned on top of
+// the form section above it. Waiting for 'load' guarantees every other
+// pin on the page already exists.
+window.addEventListener('load', initTrackScroll);
