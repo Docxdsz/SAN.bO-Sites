@@ -61,4 +61,38 @@ function renderTrackRecord() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', renderTrackRecord);
+function initTrackScroll() {
+  const viewport = document.getElementById('track-viewport');
+  const track = document.getElementById('track-track');
+  if (!viewport || !track) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-motion: reduce), (prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+  if (prefersReducedMotion || !isDesktop || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    return; // falls back to the native horizontal scroll from Task 2's CSS
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const getScrollDistance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
+
+  const st = ScrollTrigger.create({
+    trigger: viewport,
+    start: 'top top+=64', // clears the fixed header (#site-header renders ~59px tall)
+    end: () => `+=${getScrollDistance()}`,
+    pin: true,
+    scrub: 1,
+    invalidateOnRefresh: true,
+    onUpdate: (self) => {
+      track.scrollLeft = self.progress * getScrollDistance();
+    },
+  });
+
+  window.addEventListener('resize', () => st.refresh());
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderTrackRecord();
+  initTrackScroll();
+});
