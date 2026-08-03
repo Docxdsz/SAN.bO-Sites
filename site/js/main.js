@@ -94,7 +94,7 @@ function initHeroScrollStory() {
     // leaving it huge and centered on top of the text that's about to
     // reveal in the same spot) and reveal the rest in place, matching the
     // site's normal (non-pinned) .js-reveal fade-in pattern used elsewhere.
-    gsap.to(logo, { scale: 0.55, y: () => -window.innerHeight * 0.38, duration: 0.9, ease: 'power2.out' });
+    gsap.to(logo, { scale: 0.55, y: () => -window.innerHeight * 0.32, duration: 0.9, ease: 'power2.out' });
     gsap.to(revealTargets, { opacity: 1, y: 0, duration: 0.9, stagger: 0.15, delay: 0.4, ease: 'power2.out' });
     return;
   }
@@ -116,7 +116,7 @@ function initHeroScrollStory() {
       scrub: 1,
     },
   })
-    .to(logo, { scale: 0.55, y: () => -window.innerHeight * 0.38, duration: 1, ease: 'power2.inOut' }, 0)
+    .to(logo, { scale: 0.55, y: () => -window.innerHeight * 0.32, duration: 1, ease: 'power2.inOut' }, 0)
     .to(headline, { opacity: 1, y: 0, duration: 1 }, 1.0)
     .to(line2, { opacity: 1, y: 0, duration: 1 }, 2.2)
     .to([countdown, subtitle, cta], { opacity: 1, y: 0, duration: 1, stagger: 0.15 }, 3.4);
