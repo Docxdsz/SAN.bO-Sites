@@ -38,6 +38,7 @@ function trackCardHTML(entry) {
       <div class="track-marker text-center py-2">
         <p class="text-gold-400 text-xs uppercase tracking-widest">${trackStatusText(entry)}</p>
       </div>
+      <span class="track-dot" aria-hidden="true"></span>
     </div>
   `;
 }
@@ -46,7 +47,18 @@ function renderTrackRecord() {
   const track = document.getElementById('track-track');
   if (!track || !window.TRACK_RECORD) return;
 
-  track.innerHTML = window.TRACK_RECORD.map(trackCardHTML).join('');
+  track.innerHTML =
+    '<div class="track-line" aria-hidden="true"></div>' +
+    window.TRACK_RECORD.map(trackCardHTML).join('');
+
+  // The line must span the full scrollable width of the track (not just the
+  // visible viewport). Since it's absolutely positioned, its own box doesn't
+  // grow with the overflowing card content, so set its width explicitly to
+  // the track's measured scrollWidth once the cards have been laid out.
+  const line = track.querySelector('.track-line');
+  if (line) {
+    line.style.width = `${track.scrollWidth}px`;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', renderTrackRecord);

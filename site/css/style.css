@@ -201,6 +201,7 @@ body {
 }
 
 .track-track {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0;
@@ -226,11 +227,8 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  z-index: 1;
   padding: 0 20px;
-}
-
-.track-card[data-row="bottom"] {
-  flex-direction: column-reverse;
 }
 
 .track-card .track-photo-wrap {
@@ -274,10 +272,14 @@ body {
 }
 
 .track-line {
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 50%;
   height: 1px;
+  transform: translateY(-50%);
   background: linear-gradient(to right, transparent, rgba(203, 169, 122, 0.5) 4%, rgba(203, 169, 122, 0.5) 96%, transparent);
-  margin: 2.5rem 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .track-dot {
@@ -289,6 +291,8 @@ body {
   border-radius: 50%;
   background: #CBA97A;
   transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .track-card.track-highlight .track-photo,
