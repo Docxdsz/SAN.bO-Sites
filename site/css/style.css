@@ -28,10 +28,6 @@ body {
   color: #0b1712;
 }
 
-.hero-word {
-  will-change: transform, opacity;
-}
-
 .gold-frame {
   padding: 3px;
   background: linear-gradient(135deg, rgba(203, 169, 122, 0) 0%, #CBA97A 45%, #A9824F 55%, rgba(169, 130, 79, 0) 100%);

@@ -32,12 +32,11 @@ function trackCardHTML(entry) {
     ? `<img src="${entry.photo}" alt="${entry.name}" class="track-photo" loading="lazy" />`
     : `<div class="track-photo-fallback"><span class="font-serif text-offwhite text-base leading-snug">${entry.name}</span></div>`;
 
-  // Cards where launch/location are null (5 not-yet-delivered projects have no
-  // launch line; Style Um alone has no location) still render an invisible
-  // placeholder of the same height, so every card's panel stays the same
-  // total height regardless of which optional fields it has — otherwise a
-  // shorter panel shifts that card's centered .track-dot up onto its title
-  // text instead of the gap below the photo.
+  // Cards where launch is null (5 not-yet-delivered projects have no launch
+  // line) still render an invisible placeholder of the same height, so every
+  // card's panel stays the same total height regardless of which optional
+  // fields it has — otherwise a shorter panel shifts that card's centered
+  // .track-dot up onto its title text instead of the gap below the photo.
   const launchLine = entry.launch
     ? `<p class="text-gold-600 text-[11px] uppercase tracking-widest mb-1">Lançamento ${entry.launch}</p>`
     : `<p class="invisible text-[11px] mb-1">&nbsp;</p>`;

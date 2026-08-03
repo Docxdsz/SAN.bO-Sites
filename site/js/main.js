@@ -513,6 +513,7 @@ function initCountdown() {
   if (!window.SITE_CONFIG || !SITE_CONFIG.COUNTDOWN_TARGET) return;
 
   const target = new Date(SITE_CONFIG.COUNTDOWN_TARGET).getTime();
+  let countdownInterval;
 
   function tick() {
     const diff = Math.max(0, target - Date.now());
@@ -525,8 +526,12 @@ function initCountdown() {
     hoursEl.textContent = String(hours).padStart(2, '0');
     minutesEl.textContent = String(minutes).padStart(2, '0');
     secondsEl.textContent = String(seconds).padStart(2, '0');
+
+    if (diff === 0) {
+      clearInterval(countdownInterval);
+    }
   }
 
   tick();
-  setInterval(tick, 1000);
+  countdownInterval = setInterval(tick, 1000);
 }
