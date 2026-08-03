@@ -206,7 +206,7 @@ body {
   align-items: center;
   gap: 0;
   padding: 0 6vw;
-  height: 600px;
+  height: 700px;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
