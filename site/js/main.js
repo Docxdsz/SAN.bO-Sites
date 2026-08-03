@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLeadForm();
   initProfileCTA();
   initTrail();
+  initCountdown();
 });
 
 function initSmoothScroll() {
@@ -454,4 +455,31 @@ function initProfileCTA() {
       if (profile) perfilField.value = profile;
     });
   });
+}
+
+function initCountdown() {
+  const daysEl = document.getElementById('countdown-days');
+  const hoursEl = document.getElementById('countdown-hours');
+  const minutesEl = document.getElementById('countdown-minutes');
+  const secondsEl = document.getElementById('countdown-seconds');
+  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+  if (!window.SITE_CONFIG || !SITE_CONFIG.COUNTDOWN_TARGET) return;
+
+  const target = new Date(SITE_CONFIG.COUNTDOWN_TARGET).getTime();
+
+  function tick() {
+    const diff = Math.max(0, target - Date.now());
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    daysEl.textContent = String(days).padStart(2, '0');
+    hoursEl.textContent = String(hours).padStart(2, '0');
+    minutesEl.textContent = String(minutes).padStart(2, '0');
+    secondsEl.textContent = String(seconds).padStart(2, '0');
+  }
+
+  tick();
+  setInterval(tick, 1000);
 }
