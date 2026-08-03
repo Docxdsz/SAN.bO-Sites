@@ -206,6 +206,7 @@ body {
   align-items: center;
   gap: 0;
   padding: 0 6vw;
+  height: 780px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
@@ -224,8 +225,7 @@ body {
   scroll-snap-align: center;
   flex: 0 0 auto;
   width: 280px;
-  display: flex;
-  flex-direction: column;
+  height: 1px;
   position: relative;
   z-index: 1;
   padding: 0 44px;
@@ -247,38 +247,53 @@ body {
   }
 }
 
-.track-card .track-photo-wrap {
-  order: 1;
+/* .track-card collapses to a 1px anchor so align-items:center on .track-track
+   pins that exact point to the shared timeline line, regardless of how tall
+   the panel/marker content is. .track-panel and .track-marker are then
+   positioned absolutely off that anchor, each extending away from it with a
+   fixed gap — so the dot/line always land in empty space between them, never
+   across the photo or text, no matter how a given card's content wraps. */
+.track-panel {
+  position: absolute;
+  left: 44px;
+  right: 44px;
+  background: #FFFFFF;
+  border-radius: 1.25rem;
+  padding: 0.9rem;
+  box-shadow: 0 10px 30px rgba(11, 23, 18, 0.09);
 }
-.track-card[data-row="bottom"] .track-photo-wrap {
-  order: 3;
+.track-card[data-row="top"] .track-panel {
+  bottom: 12px;
+}
+.track-card[data-row="bottom"] .track-panel {
+  top: 12px;
 }
 
-.track-card .track-info {
-  order: 2;
-}
-
-.track-card .track-marker {
-  order: 2;
+.track-marker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
 .track-card[data-row="top"] .track-marker {
-  order: 3;
+  top: 12px;
 }
 .track-card[data-row="bottom"] .track-marker {
-  order: 1;
+  bottom: 12px;
 }
 
 .track-photo {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
-  border-radius: 1.5rem;
+  border-radius: 0.85rem;
+  display: block;
 }
 
 .track-photo-fallback {
   width: 100%;
-  aspect-ratio: 3 / 4;
-  border-radius: 1.5rem;
+  aspect-ratio: 3 / 2;
+  border-radius: 0.85rem;
   background: linear-gradient(160deg, #172E23, #0B1712);
   display: flex;
   align-items: center;
@@ -287,13 +302,24 @@ body {
   padding: 1.5rem;
 }
 
+.track-pill {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .track-line {
   position: absolute;
   left: 0;
   top: 50%;
   height: 1px;
   transform: translateY(-50%);
-  background: linear-gradient(to right, transparent, rgba(203, 169, 122, 0.5) 4%, rgba(203, 169, 122, 0.5) 96%, transparent);
+  background: linear-gradient(to right, transparent, rgba(169, 130, 79, 0.4) 4%, rgba(169, 130, 79, 0.4) 96%, transparent);
   pointer-events: none;
   z-index: 0;
 }
@@ -305,17 +331,18 @@ body {
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: #CBA97A;
+  background: #A9824F;
+  box-shadow: 0 0 0 4px #F4F1E8;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
 }
 
-.track-card.track-highlight .track-photo,
-.track-card.track-highlight .track-photo-fallback {
+.track-card.track-highlight .track-panel {
+  background: linear-gradient(180deg, #FFFDF6, #FFFFFF);
   outline: 2px solid #CBA97A;
-  outline-offset: 4px;
-  box-shadow: 0 0 30px rgba(203, 169, 122, 0.35);
+  outline-offset: 3px;
+  box-shadow: 0 14px 34px rgba(169, 130, 79, 0.28);
 }
 
 @media (min-width: 1024px) {

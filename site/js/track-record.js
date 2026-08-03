@@ -1,6 +1,17 @@
 // site/js/track-record.js
 // Renders window.TRACK_RECORD (site/js/track-record-data.js) into
 // #track-track as alternating top/bottom cards along a center line.
+const TRACK_ICON_PIN =
+  '<svg class="w-4 h-4 text-gold-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 21s-7-6.7-7-11.5A7 7 0 0 1 19 9.5C19 14.3 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.4"/></svg>';
+const TRACK_ICON_BUILDING =
+  '<svg class="w-4 h-4 text-gold-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="1" stroke-linejoin="round"/><path d="M10 7.2h1M13 7.2h1M10 11h1M13 11h1M10 14.8h1M13 14.8h1" stroke-linecap="round"/></svg>';
+
+const TRACK_PILL_CLASSES = {
+  entregue: 'bg-forest-800 text-offwhite',
+  'em-obras': 'bg-gold-600 text-offwhite',
+  lancamento: 'bg-gold-400 text-forest-950',
+};
+
 function trackStatusText(entry) {
   if (entry.statusMonth) {
     return `${entry.statusLabel} ${entry.statusMonth}/${entry.statusYear}`;
@@ -8,35 +19,49 @@ function trackStatusText(entry) {
   return `${entry.statusLabel} ${entry.statusYear}`;
 }
 
+function trackStatusPillHTML(entry) {
+  const classes = TRACK_PILL_CLASSES[entry.status] || TRACK_PILL_CLASSES.lancamento;
+  return `<span class="track-pill ${classes}">${trackStatusText(entry)}</span>`;
+}
+
 function trackCardHTML(entry) {
   const photo = entry.photo
     ? `<img src="${entry.photo}" alt="${entry.name}" class="track-photo" loading="lazy" />`
     : `<div class="track-photo-fallback"><span class="font-serif text-offwhite text-lg">${entry.name}</span></div>`;
 
+  // Cards where launch/location are null (5 not-yet-delivered projects have no
+  // launch line; Style Um alone has no location) still render an invisible
+  // placeholder of the same height, so every card's panel stays the same
+  // total height regardless of which optional fields it has — otherwise a
+  // shorter panel shifts that card's centered .track-dot up onto its title
+  // text instead of the gap below the photo.
   const launchLine = entry.launch
-    ? `<p class="text-offwhite/50 text-[11px] uppercase tracking-widest mb-1">Lançamento ${entry.launch}</p>`
-    : '';
+    ? `<p class="text-gold-600 text-[11px] uppercase tracking-widest mb-1">Lançamento ${entry.launch}</p>`
+    : `<p class="invisible text-[11px] mb-1">&nbsp;</p>`;
 
-  const locationLine = entry.location
-    ? `<p class="text-offwhite/70 text-sm mb-1">${entry.location}</p>`
-    : '';
+  const locationRow = entry.location
+    ? `<div class="flex items-center gap-2 mb-1.5">${TRACK_ICON_PIN}<span class="text-forest-950/75 text-sm">${entry.location}</span></div>`
+    : `<div class="invisible flex items-center gap-2 mb-1.5">${TRACK_ICON_PIN}<span class="text-sm">&nbsp;</span></div>`;
 
-  const towersLine = entry.towers
-    ? `<p class="text-offwhite/70 text-sm">${entry.units} · ${entry.towers}</p>`
-    : `<p class="text-offwhite/70 text-sm">${entry.units}</p>`;
+  const unitsText = entry.towers ? `${entry.units} · ${entry.towers}` : entry.units;
+  const unitsRow = `<div class="flex items-center gap-2 mb-3">${TRACK_ICON_BUILDING}<span class="text-forest-950/75 text-sm">${unitsText}</span></div>`;
 
   return `
     <div class="track-card${entry.highlight ? ' track-highlight' : ''}" data-row="${entry.row}" data-id="${entry.id}">
-      <div class="track-photo-wrap">${photo}</div>
-      <div class="track-info py-4">
-        <p class="font-serif text-offwhite text-xl mb-2">${entry.name}</p>
-        ${launchLine}
-        ${locationLine}
-        ${towersLine}
-        <p class="text-gold-400 text-sm mt-2">VGV: ${entry.vgv}</p>
+      <div class="track-panel">
+        <div class="track-photo-wrap">${photo}</div>
+        <div class="track-info pt-4">
+          ${launchLine}
+          <p class="font-serif text-forest-950 text-xl mb-2">${entry.name}</p>
+          ${locationRow}
+          ${unitsRow}
+          <div class="pt-3 border-t border-forest-950/10">
+            <p class="text-gold-600 text-sm font-medium">VGV: ${entry.vgv}</p>
+          </div>
+        </div>
       </div>
-      <div class="track-marker text-center py-2">
-        <p class="text-gold-400 text-xs uppercase tracking-widest">${trackStatusText(entry)}</p>
+      <div class="track-marker text-center py-3">
+        ${trackStatusPillHTML(entry)}
       </div>
       <span class="track-dot" aria-hidden="true"></span>
     </div>
@@ -72,11 +97,17 @@ function initTrackReveal() {
     return;
   }
 
+  // Observe .track-panel (the real, sized content box), not .track-card
+  // itself — .track-card collapses to a 1px positioning anchor (see the CSS
+  // comment above .track-panel), so a threshold-based ratio computed against
+  // it would fire on the faintest edge overlap instead of a meaningful
+  // fraction of the card actually being visible.
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('track-card--visible');
+          const card = entry.target.closest('.track-card');
+          if (card) card.classList.add('track-card--visible');
           observer.unobserve(entry.target);
         }
       });
@@ -84,7 +115,10 @@ function initTrackReveal() {
     { root: track, threshold: 0.35 }
   );
 
-  cards.forEach((card) => observer.observe(card));
+  cards.forEach((card) => {
+    const panel = card.querySelector('.track-panel');
+    observer.observe(panel || card);
+  });
 }
 
 function initTrackScroll() {
