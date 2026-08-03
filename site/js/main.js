@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initParallax();
   initStickyChrome();
   initHeroSealDock();
+  initLocalizacaoSealHide();
   initAnchorScroll();
   initLightbox();
   initLeadForm();
@@ -127,6 +128,28 @@ function initHeroSealDock() {
       scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
     }
   );
+}
+
+function initLocalizacaoSealHide() {
+  // The Proximidades/Localização section's aerial photo has pin labels
+  // baked in near its bottom-left corner (e.g. "AV. SÃO CAMILO"), right
+  // where the fixed Elleven seal docks — confirmed via a live scroll check
+  // that the seal visually covers part of that label. Temporarily hide the
+  // seal while this section is substantially in view, same technique as
+  // initTrackFloatingUIHide() in track-record.js uses for the Track Record
+  // section's bottom-row cards.
+  const section = document.getElementById('localizacao');
+  const seal = document.getElementById('elleven-seal');
+  if (!section || !seal || typeof IntersectionObserver === 'undefined') return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      seal.style.opacity = entry.isIntersecting ? '0' : '';
+      seal.style.pointerEvents = entry.isIntersecting ? 'none' : '';
+    },
+    { threshold: 0.15 }
+  );
+  observer.observe(section);
 }
 
 function initScrollReveals() {
