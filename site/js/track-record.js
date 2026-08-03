@@ -143,10 +143,11 @@ function initTrackFloatingUIHide() {
   const section = document.getElementById('trajetoria');
   const seal = document.getElementById('elleven-seal');
   const whatsapp = document.getElementById('whatsapp-float');
-  if (!section || (!seal && !whatsapp) || typeof IntersectionObserver === 'undefined') return;
+  const trail = document.querySelector('.trail');
+  if (!section || (!seal && !whatsapp && !trail) || typeof IntersectionObserver === 'undefined') return;
 
   const setHidden = (hidden) => {
-    [seal, whatsapp].forEach((el) => {
+    [seal, whatsapp, trail].forEach((el) => {
       if (!el) return;
       el.style.opacity = hidden ? '0' : '';
       el.style.pointerEvents = hidden ? 'none' : '';
@@ -161,9 +162,16 @@ function initTrackFloatingUIHide() {
 }
 
 function initTrackScroll() {
+  // Pin #trajetoria-pin-wrap (heading + track-viewport together), not just
+  // #track-viewport alone — otherwise the heading, being normal in-flow
+  // content above the pinned viewport, has already scrolled off the top of
+  // the page by the time the pin engages and stays off-screen for the whole
+  // horizontal scroll. Pinning the wrapper keeps the title/subtitle on
+  // screen for the entire card scroll instead of just before it.
+  const pinWrap = document.getElementById('trajetoria-pin-wrap');
   const viewport = document.getElementById('track-viewport');
   const track = document.getElementById('track-track');
-  if (!viewport || !track) return;
+  if (!pinWrap || !viewport || !track) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-motion: reduce), (prefers-reduced-motion: reduce)').matches;
   const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
@@ -177,7 +185,7 @@ function initTrackScroll() {
   const getScrollDistance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
 
   const st = ScrollTrigger.create({
-    trigger: viewport,
+    trigger: pinWrap,
     start: 'top top+=64', // clears the fixed header (#site-header renders ~59px tall)
     end: () => `+=${getScrollDistance()}`,
     pin: true,
