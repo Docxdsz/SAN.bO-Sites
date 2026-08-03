@@ -1,7 +1,7 @@
 // js/main.js
 document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
-  initHeroAnimation();
+  initHeroScrollStory();
   initScrollReveals();
   initDividers();
   initParallax();
@@ -59,30 +59,54 @@ function initAnchorScroll() {
   });
 }
 
-function splitIntoWords(el) {
-  const words = el.textContent.trim().split(/\s+/);
-  el.innerHTML = words
-    .map((w) => `<span class="inline-block overflow-hidden align-top"><span class="hero-word inline-block">${w}&nbsp;</span></span>`)
-    .join('');
-  return el.querySelectorAll('.hero-word');
-}
-
-function initHeroAnimation() {
+function initHeroScrollStory() {
   if (typeof gsap === 'undefined') return;
 
+  const hero = document.getElementById('hero');
+  const logo = document.getElementById('hero-logo');
   const headline = document.getElementById('hero-headline');
+  const line2 = document.getElementById('hero-line-2');
+  const countdown = document.getElementById('hero-countdown');
   const subtitle = document.getElementById('hero-subtitle');
   const cta = document.getElementById('hero-cta');
-  const words = splitIntoWords(headline);
+  if (!hero || !logo) return;
 
-  gsap.set(words, { yPercent: 110, opacity: 0 });
-  gsap.set([subtitle, cta], { opacity: 0, y: 16 });
+  gsap.fromTo('#hero-bg', { scale: 1.12 }, { scale: 1.06, duration: 2.4, ease: 'power3.out' });
 
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.fromTo('#hero-bg', { scale: 1.12 }, { scale: 1.06, duration: 2.4 })
-    .to(words, { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.08 }, 0.3)
-    .to(subtitle, { opacity: 1, y: 0, duration: 0.8 }, '-=0.3')
-    .to(cta, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
+  const revealTargets = [headline, line2, countdown, subtitle, cta].filter(Boolean);
+  gsap.set(revealTargets, { opacity: 0, y: 24 });
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+  if (prefersReducedMotion || !isDesktop || typeof ScrollTrigger === 'undefined') {
+    // Mobile / reduced-motion fallback: no scroll-jacking pin, everything
+    // reveals in place shortly after load instead, matching the site's
+    // normal (non-pinned) .js-reveal fade-in pattern used elsewhere.
+    gsap.to(revealTargets, { opacity: 1, y: 0, duration: 0.9, stagger: 0.15, delay: 0.4, ease: 'power2.out' });
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Pins #hero itself (it's already min-h-screen) for an extended scroll
+  // range and scrubs a single timeline across it: the huge logo shrinks
+  // first to make room, then the two client-mandated headlines reveal in
+  // sequence, then the countdown/subtitle/CTA reveal together just before
+  // the pin releases and the page continues scrolling normally.
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: hero,
+      start: 'top top',
+      end: '+=220%',
+      pin: true,
+      scrub: 1,
+    },
+  })
+    .to(logo, { scale: 0.55, duration: 1, ease: 'power2.inOut' }, 0)
+    .to(headline, { opacity: 1, y: 0, duration: 1 }, 0.4)
+    .to(line2, { opacity: 1, y: 0, duration: 1 }, 1.6)
+    .to([countdown, subtitle, cta], { opacity: 1, y: 0, duration: 1, stagger: 0.15 }, 2.8);
 }
 
 function initHeroSealDock() {
@@ -94,7 +118,7 @@ function initHeroSealDock() {
 
   gsap.fromTo(
     seal,
-    { scale: 1.65, x: () => window.innerWidth * 0.14, y: () => -window.innerHeight * 0.28 },
+    { scale: 1.2, x: () => window.innerWidth * 0.04, y: () => -window.innerHeight * 0.08 },
     {
       scale: 1,
       x: 0,
