@@ -74,6 +74,14 @@ function initHeroScrollStory() {
 
   gsap.fromTo('#hero-bg', { scale: 1.12 }, { scale: 1.06, duration: 2.4, ease: 'power3.out' });
 
+  // #hero-logo is absolutely positioned (top-1/2 left-1/2 in the markup, no
+  // Tailwind translate classes) so it can be centered in the hero regardless
+  // of how tall the sibling reveal content is. xPercent/yPercent:-50 does the
+  // centering and is never touched again; the "rise while shrinking" motion
+  // below animates plain `y` (viewport-relative px) and `scale` on top of
+  // that fixed centering offset, so the two don't fight over `transform`.
+  gsap.set(logo, { xPercent: -50, yPercent: -50, y: 0, scale: 1 });
+
   const revealTargets = [headline, line2, countdown, subtitle, cta].filter(Boolean);
   gsap.set(revealTargets, { opacity: 0, y: 24 });
 
@@ -81,9 +89,12 @@ function initHeroScrollStory() {
   const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
 
   if (prefersReducedMotion || !isDesktop || typeof ScrollTrigger === 'undefined') {
-    // Mobile / reduced-motion fallback: no scroll-jacking pin, everything
-    // reveals in place shortly after load instead, matching the site's
-    // normal (non-pinned) .js-reveal fade-in pattern used elsewhere.
+    // Mobile / reduced-motion fallback: no scroll-jacking pin. Settle the
+    // logo into its smaller, risen resting spot right away (rather than
+    // leaving it huge and centered on top of the text that's about to
+    // reveal in the same spot) and reveal the rest in place, matching the
+    // site's normal (non-pinned) .js-reveal fade-in pattern used elsewhere.
+    gsap.to(logo, { scale: 0.55, y: () => -window.innerHeight * 0.38, duration: 0.9, ease: 'power2.out' });
     gsap.to(revealTargets, { opacity: 1, y: 0, duration: 0.9, stagger: 0.15, delay: 0.4, ease: 'power2.out' });
     return;
   }
@@ -91,10 +102,11 @@ function initHeroScrollStory() {
   gsap.registerPlugin(ScrollTrigger);
 
   // Pins #hero itself (it's already min-h-screen) for an extended scroll
-  // range and scrubs a single timeline across it: the huge logo shrinks
-  // first to make room, then the two client-mandated headlines reveal in
-  // sequence, then the countdown/subtitle/CTA reveal together just before
-  // the pin releases and the page continues scrolling normally.
+  // range and scrubs a single timeline across it: the huge centered logo
+  // rises and shrinks first to make room, then the two client-mandated
+  // headlines reveal in sequence, then the countdown/subtitle/CTA reveal
+  // together just before the pin releases and the page continues scrolling
+  // normally.
   gsap.timeline({
     scrollTrigger: {
       trigger: hero,
@@ -104,10 +116,10 @@ function initHeroScrollStory() {
       scrub: 1,
     },
   })
-    .to(logo, { scale: 0.55, duration: 1, ease: 'power2.inOut' }, 0)
-    .to(headline, { opacity: 1, y: 0, duration: 1 }, 0.4)
-    .to(line2, { opacity: 1, y: 0, duration: 1 }, 1.6)
-    .to([countdown, subtitle, cta], { opacity: 1, y: 0, duration: 1, stagger: 0.15 }, 2.8);
+    .to(logo, { scale: 0.55, y: () => -window.innerHeight * 0.38, duration: 1, ease: 'power2.inOut' }, 0)
+    .to(headline, { opacity: 1, y: 0, duration: 1 }, 1.0)
+    .to(line2, { opacity: 1, y: 0, duration: 1 }, 2.2)
+    .to([countdown, subtitle, cta], { opacity: 1, y: 0, duration: 1, stagger: 0.15 }, 3.4);
 }
 
 function initHeroSealDock() {
