@@ -2,3 +2,5 @@
 .superpowers/
 node_modules/
 .assets-src/
+.vercel
+.env*
