@@ -124,37 +124,21 @@ function initTrackReveal() {
 }
 
 function initTrackFloatingUIHide() {
-  // The fixed WhatsApp button (bottom-right) floats above every section —
-  // fine everywhere else, but this section's bottom-row cards can render
-  // right where it sits (worst during the desktop pin, which holds the
-  // section in place for a while; also happens briefly while scrolling
-  // past on mobile). Temporarily hide it while #trajetoria is substantially
-  // in view. The Elleven seal used to be hidden here too, but the client
-  // wants it always visible, so it's excluded — it may briefly overlap a
-  // card here, but that's the accepted tradeoff.
-  //
-  // main.js's initStickyChrome() runs its own IntersectionObserver on #hero
-  // that toggles opacity-0/opacity-100 on #whatsapp-float too. Toggling the
-  // same classes from a second observer is a real race: both observers can
-  // fire their first callback in the same tick (e.g. on a fast/instant
-  // scroll jump), and whichever happens to run last wins, so the button
-  // could stay visible or hidden unpredictably depending on scroll speed.
-  // Setting inline style.opacity here sidesteps that entirely — inline
-  // style always wins over a class-based opacity utility in the cascade,
-  // regardless of which observer's callback happened to run last — and
-  // clearing it (style.opacity = '') on exit hands control back to
-  // whatever class state initStickyChrome has already set.
+  // The fixed left-edge trail guide floats above every section — fine
+  // everywhere else, but it visually clutters this section's dense card
+  // grid (worst during the desktop pin, which holds the section in place
+  // for a while). Temporarily hide it while #trajetoria is substantially
+  // in view. The Elleven seal and WhatsApp button used to be hidden here
+  // too (to avoid overlapping bottom-row cards), but the client wants both
+  // always visible, so they're excluded — they may briefly overlap a card
+  // here, but that's the accepted tradeoff.
   const section = document.getElementById('trajetoria');
-  const whatsapp = document.getElementById('whatsapp-float');
   const trail = document.querySelector('.trail');
-  if (!section || (!whatsapp && !trail) || typeof IntersectionObserver === 'undefined') return;
+  if (!section || !trail || typeof IntersectionObserver === 'undefined') return;
 
   const setHidden = (hidden) => {
-    [whatsapp, trail].forEach((el) => {
-      if (!el) return;
-      el.style.opacity = hidden ? '0' : '';
-      el.style.pointerEvents = hidden ? 'none' : '';
-    });
+    trail.style.opacity = hidden ? '0' : '';
+    trail.style.pointerEvents = hidden ? 'none' : '';
   };
 
   const observer = new IntersectionObserver(
