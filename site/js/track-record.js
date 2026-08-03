@@ -61,6 +61,32 @@ function renderTrackRecord() {
   }
 }
 
+function initTrackReveal() {
+  const track = document.getElementById('track-track');
+  if (!track) return;
+
+  const cards = track.querySelectorAll('.track-card');
+
+  if (typeof IntersectionObserver === 'undefined') {
+    cards.forEach((card) => card.classList.add('track-card--visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('track-card--visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { root: track, threshold: 0.35 }
+  );
+
+  cards.forEach((card) => observer.observe(card));
+}
+
 function initTrackScroll() {
   const viewport = document.getElementById('track-viewport');
   const track = document.getElementById('track-track');
@@ -94,5 +120,6 @@ function initTrackScroll() {
 
 document.addEventListener('DOMContentLoaded', () => {
   renderTrackRecord();
+  initTrackReveal();
   initTrackScroll();
 });

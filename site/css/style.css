@@ -228,7 +228,23 @@ body {
   flex-direction: column;
   position: relative;
   z-index: 1;
-  padding: 0 20px;
+  padding: 0 44px;
+  opacity: 0;
+  transform: scale(0.92) translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.track-card.track-card--visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .track-card .track-photo-wrap {
