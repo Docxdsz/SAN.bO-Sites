@@ -13,6 +13,9 @@ const TRACK_PILL_CLASSES = {
 };
 
 function trackStatusText(entry) {
+  if (!entry.statusYear) {
+    return entry.statusLabel;
+  }
   if (entry.statusMonth) {
     return `${entry.statusLabel} ${entry.statusMonth}/${entry.statusYear}`;
   }
