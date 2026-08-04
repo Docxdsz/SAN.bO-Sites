@@ -338,7 +338,8 @@ body {
 
 .track-card.track-highlight .track-panel {
   background: linear-gradient(180deg, rgb(11 23 18), rgb(17 34 27 ));
-  color: #ffffff;
+  text-color: #ffffff;!important
+
   outline: 2px solid #CBA97A;
   outline-offset: 3px;
   box-shadow: 0 14px 34px rgba(169, 130, 79, 0.28);
