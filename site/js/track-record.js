@@ -54,10 +54,10 @@ function trackCardHTML(entry) {
         <div class="track-photo-wrap">${photo}</div>
         <div class="track-info pt-3">
           ${launchLine}
-          <p class="font-serif text-offwhite-950 text-lg mb-1.5 leading-tight">${entry.name}</p>
+          <p class="font-serif text-forest-950 text-lg mb-1.5 leading-tight">${entry.name}</p>
           ${locationRow}
           ${unitsRow}
-          <div class="pt-2 border-t border-offwhite-950/10">
+          <div class="pt-2 border-t border-forest-950/10">
             <p class="text-gold-600 text-sm font-medium">VGV: ${entry.vgv}</p>
           </div>
         </div>
