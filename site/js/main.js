@@ -64,6 +64,7 @@ function initHeroScrollStory() {
 
   const hero = document.getElementById('hero');
   const logo = document.getElementById('hero-logo');
+  const textColumn = document.getElementById('hero-text');
   const headline = document.getElementById('hero-headline');
   const line2 = document.getElementById('hero-line-2');
   const countdown = document.getElementById('hero-countdown');
@@ -80,9 +81,73 @@ function initHeroScrollStory() {
   // below animates plain `y` (viewport-relative px) and `scale` on top of
   // that fixed centering offset, so the two don't fight over `transform`.
   gsap.set(logo, { xPercent: -50, yPercent: -50, y: 0, scale: 1 });
+  const logoNaturalHeight = logo.getBoundingClientRect().height;
 
   const revealTargets = [headline, line2, countdown, subtitle, cta].filter(Boolean);
   gsap.set(revealTargets, { opacity: 0, y: 24 });
+
+  // Static Tailwind pt-*/mb-* breakpoints only react to viewport WIDTH, but
+  // the risk here is viewport HEIGHT: a short-but-wide laptop screen (e.g.
+  // 1024x768 or 1366x768) hits the same "logo overlaps headline" and
+  // "CTA overlaps the fixed Elleven seal" collisions that a narrow phone
+  // does, at completely different Tailwind breakpoints. Rather than
+  // hand-tuning yet another fixed pixel value per breakpoint, compute the
+  // logo's actual final position from its real measured height and set the
+  // text column's clearance from that directly, then measure the rendered
+  // result and pull the whole column up further if the CTA still reaches
+  // the seal — this adapts correctly to any viewport size.
+  function positionHeroText(targetScale, riseFraction) {
+    if (!textColumn) return;
+    const riseY = window.innerHeight * riseFraction;
+    const logoCenterY = window.innerHeight / 2 - riseY;
+    const logoFinalHeight = logoNaturalHeight * targetScale;
+    const logoBottom = logoCenterY + logoFinalHeight / 2;
+    const GAP = 24;
+    textColumn.style.paddingTop = Math.max(16, Math.round(logoBottom + GAP)) + 'px';
+
+    requestAnimationFrame(() => {
+      if (!cta || !headline) return;
+      // Don't measure the seal's live position here — it has its own
+      // scroll-tied dock animation (initHeroSealDock) and hasn't reached
+      // its resting spot yet at this point (setup time, scroll still at
+      // 0). By the time the CTA is actually visible (near the end of the
+      // hero pin, or immediately in the no-pin fallback), the seal is at
+      // or very near its docked CSS position instead — computed here from
+      // its known fixed/bottom-5 + image-height classes rather than
+      // measured, so this check isn't thrown off by the seal's own
+      // in-flight animation.
+      const sealHeight = window.matchMedia('(min-width: 768px)').matches ? 112 : 96;
+      const sealDockedTop = window.innerHeight - 20 - sealHeight;
+      const GAP2 = 16;
+      // headline/cta are still sitting at their pre-reveal y:24 offset here
+      // (see the gsap.set(revealTargets, { y: 24 }) above) — subtract that
+      // back out so this measures their true resting positions.
+      const stackTop = headline.getBoundingClientRect().top - 24;
+      const stackBottom = cta.getBoundingClientRect().bottom - 24;
+      const stackHeight = stackBottom - stackTop;
+      const available = sealDockedTop - GAP2 - stackTop;
+
+      if (stackHeight > available && available > 0) {
+        // The stack (headline through CTA) is taller than the room between
+        // where it must start (right under the logo) and where it must end
+        // (above the seal) — sliding the whole block up would just trade
+        // the seal overlap for a logo overlap instead, so shrink the stack
+        // itself to fit rather than moving it. The pivot is set to the
+        // padding-top's own pixel value, not a bare "top" keyword — "top"
+        // means the box's outer edge, which is BEFORE the padding, so
+        // scaling from there shrinks the padding-under-the-logo clearance
+        // too (confirmed live: it silently ate the exact gap this function
+        // just computed). Anchoring the pivot at the padding/content
+        // boundary keeps the headline fixed right where it already is and
+        // only shrinks the content below it. Clamped so it never becomes
+        // illegibly small.
+        const scale = Math.max(0.72, available / stackHeight);
+        const paddingTopPx = parseFloat(textColumn.style.paddingTop) || 0;
+        textColumn.style.transformOrigin = `center ${paddingTopPx}px`;
+        textColumn.style.transform = `scale(${scale})`;
+      }
+    });
+  }
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
@@ -93,12 +158,19 @@ function initHeroScrollStory() {
     // leaving it huge and centered on top of the text that's about to
     // reveal in the same spot) and reveal the rest in place, matching the
     // site's normal (non-pinned) .js-reveal fade-in pattern used elsewhere.
-    gsap.to(logo, { scale: 0.55, y: () => -window.innerHeight * 0.27, duration: 0.9, ease: 'power2.out' });
+    const scale = 0.42;
+    const riseFraction = 0.34;
+    positionHeroText(scale, riseFraction);
+    gsap.to(logo, { scale, y: () => -window.innerHeight * riseFraction, duration: 0.9, ease: 'power2.out' });
     gsap.to(revealTargets, { opacity: 1, y: 0, duration: 0.9, stagger: 0.15, delay: 0.4, ease: 'power2.out' });
     return;
   }
 
   gsap.registerPlugin(ScrollTrigger);
+
+  const desktopScale = 0.55;
+  const desktopRiseFraction = 0.27;
+  positionHeroText(desktopScale, desktopRiseFraction);
 
   // Pins #hero itself (it's already min-h-screen) for an extended scroll
   // range and scrubs a single timeline across it: the huge centered logo
@@ -115,7 +187,7 @@ function initHeroScrollStory() {
       scrub: 1,
     },
   })
-    .to(logo, { scale: 0.55, y: () => -window.innerHeight * 0.27, duration: 1, ease: 'power2.inOut' }, 0)
+    .to(logo, { scale: desktopScale, y: () => -window.innerHeight * desktopRiseFraction, duration: 1, ease: 'power2.inOut' }, 0)
     .to(headline, { opacity: 1, y: 0, duration: 1 }, 1.0)
     .to(line2, { opacity: 1, y: 0, duration: 1 }, 2.2)
     .to([countdown, subtitle, cta], { opacity: 1, y: 0, duration: 1, stagger: 0.15 }, 3.4);
@@ -136,7 +208,22 @@ function initHeroSealDock() {
       x: 0,
       y: 0,
       ease: 'none',
-      scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
+      // Matches initHeroScrollStory's own hero pin range exactly, using
+      // absolute values rather than 'top top'/'bottom top' strings — this
+      // ScrollTrigger is created (initHeroSealDock runs) after the hero
+      // pin already exists, and a second ScrollTrigger's 'top top' on an
+      // ALREADY-PINNED element resolves relative to that pinned state, not
+      // the section's original position (confirmed live via
+      // ScrollTrigger.getAll(): it silently started at start:1690 instead
+      // of 0, meaning the seal didn't even begin docking until after the
+      // pin had already released). start:0 sidesteps that ambiguity
+      // entirely. Previously this used 'bottom top', which — for the
+      // *correctly*-resolving case — measures against the full pin-spacer
+      // (original height + pin distance), ~1 viewport taller than where
+      // the pin itself releases, leaving the seal still mid-dock
+      // (bigger/higher/further right) for the entire window the CTA is
+      // visible on shorter viewports and overlapping it.
+      scrollTrigger: { trigger: hero, start: 0, end: () => window.innerHeight * 2.2, scrub: true },
     }
   );
 }
