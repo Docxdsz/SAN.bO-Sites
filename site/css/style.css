@@ -348,3 +348,6 @@ body {
     scroll-snap-type: none;
   }
 }
+.pb-40 {
+    padding-bottom: 3rem;!important
+}
