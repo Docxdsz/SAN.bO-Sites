@@ -343,6 +343,10 @@ body {
   box-shadow: 0 14px 34px rgba(169, 130, 79, 0.28);
 }
 
+img[src*="17-aguas-do-cerrado.png"] {
+    object-fit: contain;
+}
+
 @media (min-width: 1024px) {
   .track-track {
     scroll-snap-type: none;
