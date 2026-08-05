@@ -360,5 +360,35 @@ img[src*="17-aguas-do-cerrado.png"] {
   .track-track {
     overflow-x: hidden;
     touch-action: pan-y;
+    height: 440px;
+    margin-top: 0;
+    /* align-items: center (the desktop default) would force the timeline
+       anchor to sit at the exact vertical midpoint, splitting the reserved
+       space 50/50 above and below it. The panel (below) needs far more room
+       than the status pill (above), so anchor near the top instead and push
+       each card down by hand to where the line should sit. */
+    align-items: flex-start;
+  }
+
+  .track-card {
+    margin-top: 64px;
+  }
+
+  .track-line {
+    top: 64px;
+  }
+
+  /* No zig-zag on mobile: every card sits in the same row (panel below the
+     line, status pill above it), regardless of its data-row. */
+  .track-card[data-row="top"] .track-panel,
+  .track-card[data-row="bottom"] .track-panel {
+    top: 10px;
+    bottom: auto;
+  }
+
+  .track-card[data-row="top"] .track-marker,
+  .track-card[data-row="bottom"] .track-marker {
+    bottom: 10px;
+    top: auto;
   }
 }
