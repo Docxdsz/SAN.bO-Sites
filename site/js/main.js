@@ -195,6 +195,10 @@ function initHeroScrollStory() {
 
 function initHeroSealDock() {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  // On mobile the seal just sits statically in its docked corner (bottom-5
+  // left-5, from its own fixed classes) — no oversized/offset start state
+  // to scroll-animate into place.
+  if (!window.matchMedia('(min-width: 1024px)').matches) return;
 
   const seal = document.getElementById('elleven-seal');
   const hero = document.getElementById('hero');
