@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProfileCTA();
   initTrail();
   initCountdown();
+  initFooterSealHide();
 });
 
 function initSmoothScroll() {
@@ -226,6 +227,28 @@ function initHeroSealDock() {
       scrollTrigger: { trigger: hero, start: 0, end: () => window.innerHeight * 2.2, scrub: true },
     }
   );
+}
+
+function initFooterSealHide() {
+  // #elleven-seal is position:fixed, so it stays docked in the same
+  // viewport corner for the rest of the page after initHeroSealDock's
+  // animation — including once the footer scrolls up underneath it. On
+  // mobile the footer's legal text runs almost edge-to-edge and gets
+  // covered by the seal; on desktop the text sits in a centered max-width
+  // column well clear of that corner, so this only needs to run <1024px.
+  const seal = document.getElementById('elleven-seal');
+  const footer = document.getElementById('site-footer');
+  if (!seal || !footer || typeof IntersectionObserver === 'undefined') return;
+  if (!window.matchMedia('(max-width: 1023.98px)').matches) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      seal.style.opacity = entry.isIntersecting ? '0' : '';
+      seal.style.pointerEvents = entry.isIntersecting ? 'none' : '';
+    },
+    { threshold: 0.05 }
+  );
+  observer.observe(footer);
 }
 
 function initScrollReveals() {
