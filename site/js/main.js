@@ -538,9 +538,9 @@ function initLeadForm() {
       return;
     }
 
-    const endpoint = window.SITE_CONFIG && SITE_CONFIG.FORMSPREE_ENDPOINT;
-    if (!endpoint || endpoint.startsWith('TODO')) {
-      console.error('SITE_CONFIG.FORMSPREE_ENDPOINT is not configured yet.');
+    const endpoint = window.SITE_CONFIG && SITE_CONFIG.CONTACT_ENDPOINT;
+    if (!endpoint) {
+      console.error('SITE_CONFIG.CONTACT_ENDPOINT is not configured.');
       errorEl.textContent = 'Formulário ainda não configurado. Tente novamente mais tarde.';
       errorEl.classList.remove('hidden');
       return;
@@ -550,13 +550,14 @@ function initLeadForm() {
     submitButton.disabled = true;
 
     try {
+      const payload = Object.fromEntries(new FormData(form).entries());
       const response = await fetch(endpoint, {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) throw new Error(`Formspree respondeu ${response.status}`);
+      if (!response.ok) throw new Error(`Endpoint respondeu ${response.status}`);
 
       form.classList.add('hidden');
       successEl.classList.remove('hidden');

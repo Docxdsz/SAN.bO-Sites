@@ -123,6 +123,35 @@ function initTrackReveal() {
   });
 }
 
+function initTrackMobileNav() {
+  const track = document.getElementById('track-track');
+  const prevBtn = document.getElementById('track-prev');
+  const nextBtn = document.getElementById('track-next');
+  if (!track || !prevBtn || !nextBtn) return;
+
+  const getStep = () => {
+    const card = track.querySelector('.track-card');
+    return card ? card.getBoundingClientRect().width : track.clientWidth;
+  };
+
+  const updateButtons = () => {
+    const max = track.scrollWidth - track.clientWidth;
+    prevBtn.disabled = track.scrollLeft <= 4;
+    nextBtn.disabled = track.scrollLeft >= max - 4;
+  };
+
+  prevBtn.addEventListener('click', () => {
+    track.scrollBy({ left: -getStep(), behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', () => {
+    track.scrollBy({ left: getStep(), behavior: 'smooth' });
+  });
+
+  track.addEventListener('scroll', updateButtons, { passive: true });
+  window.addEventListener('resize', updateButtons);
+  updateButtons();
+}
+
 function initTrackFloatingUIHide() {
   // The fixed left-edge trail guide floats above every section — fine
   // everywhere else, but it visually clutters this section's dense card
@@ -189,6 +218,7 @@ function initTrackScroll() {
 document.addEventListener('DOMContentLoaded', () => {
   renderTrackRecord();
   initTrackReveal();
+  initTrackMobileNav();
   initTrackFloatingUIHide();
 });
 

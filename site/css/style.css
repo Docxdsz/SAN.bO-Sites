@@ -352,3 +352,13 @@ img[src*="17-aguas-do-cerrado.png"] {
     scroll-snap-type: none;
   }
 }
+
+/* Below the desktop pin breakpoint, navigation happens only via the
+   prev/next buttons — swipe/scroll is disabled. overflow-x: hidden still
+   allows JS-driven scrollLeft/scrollBy, just not user-initiated scrolling. */
+@media (max-width: 1023.98px) {
+  .track-track {
+    overflow-x: hidden;
+    touch-action: pan-y;
+  }
+}

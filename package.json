@@ -1,0 +1,9 @@
+{
+  "name": "reserva-vereda-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Reserva Vereda static site + Vercel serverless contact endpoint.",
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
+}
