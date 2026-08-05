@@ -230,25 +230,52 @@ function initHeroSealDock() {
 }
 
 function initFooterSealHide() {
-  // #elleven-seal is position:fixed, so it stays docked in the same
-  // viewport corner for the rest of the page after initHeroSealDock's
-  // animation — including once the footer scrolls up underneath it. On
-  // mobile the footer's legal text runs almost edge-to-edge and gets
-  // covered by the seal; on desktop the text sits in a centered max-width
-  // column well clear of that corner, so this only needs to run <1024px.
+  // #elleven-seal is position:fixed, so it stays docked in the bottom-left
+  // corner for the whole page after initHeroSealDock's animation, and text
+  // scrolls underneath it in several sections (hero's stacked CTA buttons,
+  // paragraph text in localizacao, the footer's legal copy). Sections tile
+  // the entire page with no gaps, so hiding whenever "some section" is in
+  // view would hide the seal almost permanently — instead, watch actual
+  // text elements and only hide when one is inside the seal's own
+  // on-screen footprint (bottom-left corner), via a rootMargin that shrinks
+  // the observer's root down to roughly that footprint. #trajetoria is
+  // skipped: the client explicitly accepted the seal briefly overlapping a
+  // card there (see initTrackFloatingUIHide above).
   const seal = document.getElementById('elleven-seal');
-  const footer = document.getElementById('site-footer');
-  if (!seal || !footer || typeof IntersectionObserver === 'undefined') return;
+  if (!seal || typeof IntersectionObserver === 'undefined') return;
   if (!window.matchMedia('(max-width: 1023.98px)').matches) return;
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      seal.style.opacity = entry.isIntersecting ? '0' : '';
-      seal.style.pointerEvents = entry.isIntersecting ? 'none' : '';
-    },
-    { threshold: 0.05 }
+  const targets = document.querySelectorAll(
+    'section:not(#trajetoria) :is(h1, h2, h3, p, a, button), #site-footer :is(h1, h2, h3, p, a, button)'
   );
-  observer.observe(footer);
+  if (!targets.length) return;
+
+  const CORNER = 150; // px — a bit larger than the seal's own ~96–112px footprint
+  const overlapping = new Set();
+  let observer;
+
+  const buildObserver = () => {
+    if (observer) observer.disconnect();
+    overlapping.clear();
+    const top = Math.max(0, window.innerHeight - CORNER);
+    const right = Math.max(0, window.innerWidth - CORNER);
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) overlapping.add(entry.target);
+          else overlapping.delete(entry.target);
+        });
+        const hidden = overlapping.size > 0;
+        seal.style.opacity = hidden ? '0' : '';
+        seal.style.pointerEvents = hidden ? 'none' : '';
+      },
+      { rootMargin: `-${top}px -${right}px 0px 0px` }
+    );
+    targets.forEach((target) => observer.observe(target));
+  };
+
+  buildObserver();
+  window.addEventListener('resize', buildObserver);
 }
 
 function initScrollReveals() {
